@@ -1,0 +1,8 @@
+.tmp/
+.cache/
+.git/
+build/
+package-lock.json
+node_modules/
+data/
+dist/
