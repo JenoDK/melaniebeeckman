@@ -14,9 +14,9 @@ COPY ./package-lock.json ./
 # Stage 1: Build Strapi admin panel
 FROM base AS build
 WORKDIR /opt/app
-RUN yarn install --frozen-lockfile # or npm ci
+RUN npm ci
 COPY . .
-RUN yarn build # or npm run build
+RUN npm run build
 
 # Stage 2: Production image
 FROM base AS production
