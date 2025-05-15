@@ -1,4 +1,7 @@
 ---
+import BlocksRendererWrapper from '../components/BlocksRendererWrapper';
+import "../styles/global.css";
+
 const STRAPI_URL = import.meta.env.STRAPI_API_URL;
 const STRAPI_TOKEN = import.meta.env.STRAPI_API_TOKEN;
 let services: any[] = [];
@@ -10,7 +13,7 @@ try {
     });
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
-    services = data.data; // Strapi v4 wraps data in a 'data' object
+    services = data.data;
 } catch (error) {
     console.error("Error fetching services:", error);
 }
@@ -21,13 +24,13 @@ try {
     <title>Our Services</title>
 </head>
 <body>
-<h1>Our Services</h1>
+<h1 class="text-amber-300">Our Services</h1>
 {services.length > 0 ? (
         <ul>
             {services.map(service => (
                     <li>
                         <h2>{service.name}</h2>
-                        <BlocksRenderer content={service.description} />
+                        <BlocksRendererWrapper content={service.description} />
                     </li>
             ))}
         </ul>
