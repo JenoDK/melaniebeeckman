@@ -32,8 +32,6 @@ services:
       - strapi
     depends_on:
       - strapiDB
-    extra_hosts:
-      - "melaniebeeckman.be:host-gateway"
 
   strapiDB:
     container_name: strapiDB
