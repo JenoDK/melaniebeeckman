@@ -1,4 +1,4 @@
-# [Your Project Name - e.g., Melanie Beeckman Portfolio]
+# Melanie Beeckman Portfolio
 
 This repository contains the frontend (Astro) and backend (Strapi CMS) configurations for the [Your Project Name] website. The site is designed to be a performant, statically-generated frontend with a headless CMS for easy content management.
 
@@ -24,8 +24,8 @@ This repository contains the frontend (Astro) and backend (Strapi CMS) configura
 
 This project consists of two main parts:
 
-1.  **Strapi CMS (`[strapi-folder-name-in-repo]`):** A headless CMS used to manage all website content (pages, services, articles, etc.). It provides a user-friendly admin interface for the client and exposes content via a REST API.
-2.  **Astro Frontend (`[astro-folder-name-in-repo]`):** A static site generator that fetches content from the Strapi API during its build process. It generates highly optimized static HTML, CSS, and JavaScript files for fast loading and good SEO.
+1.  **Strapi CMS (`melaniebeeckman-strapi`):** A headless CMS used to manage all website content (pages, services, articles, etc.). It provides a user-friendly admin interface for the client and exposes content via a REST API.
+2.  **Astro Frontend (`melaniebeeckman-astro`):** A static site generator that fetches content from the Strapi API during its build process. It generates highly optimized static HTML, CSS, and JavaScript files for fast loading and good SEO.
 
 The live website serves these static files, and content updates in Strapi trigger an automatic rebuild and deployment of the Astro site.
 
@@ -57,11 +57,11 @@ The live website serves these static files, and content updates in Strapi trigge
 
 ### Strapi (CMS Backend)
 
-Located in the `[strapi-folder-name-in-repo]` directory.
+Located in the `melaniebeeckman-strapi` directory.
 
 1.  **Navigate to the Strapi directory:**
     ```bash
-    cd [strapi-folder-name-in-repo]
+    cd melaniebeeckman-strapi
     ```
 2.  **Install dependencies:**
     ```bash
@@ -84,11 +84,11 @@ Located in the `[strapi-folder-name-in-repo]` directory.
 
 ### Astro (Static Frontend)
 
-Located in the `[astro-folder-name-in-repo]` directory.
+Located in the `melaniebeeckman-astro` directory.
 
 1.  **Navigate to the Astro directory:**
     ```bash
-    cd [astro-folder-name-in-repo]
+    cd melaniebeeckman-astro
     ```
 2.  **Install dependencies:**
     ```bash
@@ -176,7 +176,7 @@ Nginx acts as a web server and reverse proxy:
     *   Configure API Tokens for Astro (read-only for production).
     *   Configure the webhook in Strapi to point to your Nginx-proxied listener endpoint, including the shared secret.
 7.  **Deploy Astro Frontend:**
-    *   Run the `deploy-astro.sh` script (or its equivalent manual steps) to:
+    *   Run the `build-and-deploy-astro.sh` script (or its equivalent manual steps) to:
         *   Build the Astro site (fetching data from the live Strapi API using the production token).
         *   Copy built files to the Nginx web root.
         *   Set permissions.
@@ -191,21 +191,6 @@ Nginx acts as a web server and reverse proxy:
 *   **Permissions:** Ensure Nginx has read access to the Astro static files, and the user running the deployment script has necessary permissions.
 *   **Backups:** Regularly back up your Strapi database and any uploaded files (Strapi uploads volume).
 
-## Contributing (Optional)
-
-[Instructions for contributing to the project, if applicable.]
-
 ## License (Optional)
 
-[Specify the license for your project, e.g., MIT, GPL.]
-
 ---
-
-**How to use this README:**
-
-1.  **Replace placeholders:** Fill in `[Your Project Name]`, `[strapi-folder-name-in-repo]`, `[astro-folder-name-in-repo]`, version numbers, etc.
-2.  **Adjust details:** If you use Yarn instead of npm, update commands. If your subpath for Strapi is different, reflect that.
-3.  **Security:** This README avoids specific paths like `/root/apps/...` or actual secret values. When you follow it for your *own* setup, you'll translate these general descriptions into your specific server paths and configurations.
-4.  **Consider adding a diagram:** A simple architecture diagram can be very helpful.
-
-This README provides a solid, professional overview for anyone (including your future self or other developers) looking to understand or work on the project.
