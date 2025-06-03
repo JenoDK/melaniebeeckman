@@ -1,7 +1,7 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Welcome from '../../components/Welcome.astro';
-import { getAsLanguage, getLanguagePaths } from '../../i18n/utils';
+import Layout from '@layouts/Layout.astro';
+import { getAsLanguage, getLanguagePaths } from '@i18n/utils';
+import IndexComponent from '@components/IndexComponent.astro';
 
 const lang = getAsLanguage(Astro.params.lang, Astro.currentLocale);
 
@@ -11,5 +11,5 @@ export function getStaticPaths() {
 ---
 
 <Layout lang={lang}>
-    <Welcome />
+    <IndexComponent lang={lang} />
 </Layout>

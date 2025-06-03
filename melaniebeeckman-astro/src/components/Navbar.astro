@@ -1,19 +1,22 @@
 ---
 import { Image } from 'astro:assets'
-import ProfilePicture from '@assets/profile_picture.png'
-import { type Language, translate } from '../i18n/utils';
+import { type Language, translate } from '@i18n/utils';
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import { getProfileData } from '@lib/profile';
 
 interface Props {
 	lang: Language;
 }
 
 const { lang } = Astro.props;
+
 const homeURL = getRelativeLocaleUrl(lang, "");
 const researchUrl = getRelativeLocaleUrl(lang, "research");
 const papersUrl = getRelativeLocaleUrl(lang, "papers");
 const cvUrl = getRelativeLocaleUrl(lang, "cv");
 const contactUrl = getRelativeLocaleUrl(lang, "contact");
+
+const { profile, profilePicture, fullName } = await getProfileData(lang);
 
 ---
 <aside
@@ -23,11 +26,12 @@ const contactUrl = getRelativeLocaleUrl(lang, "contact");
 		<div>
 			<div class='flex justify-center items-center flex-col'>
 				<Image
+					src={profilePicture}
+					inferSize={true}
+					alt={`Picture for ${fullName}`}
 					class='mask mask-circle size-44'
-					src={ProfilePicture}
-					alt={`Profile picture of TODO`}
 				/>
-				<h1 class="text-lg font-black mt-8 hidden lg:block">TODO <span>TODO</span></h1>
+				<h1 class="text-lg font-black mt-8 hidden lg:block">{fullName}</h1>
 			</div>
 			<div class='mx-4 mt-16'>
 				<ul class='space-y-4 menu grow shrink menu-md overflow-y-auto'>

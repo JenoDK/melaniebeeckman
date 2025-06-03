@@ -1,0 +1,40 @@
+---
+import Hero from '@components/Hero.astro';
+import Grid from '@components/Grid.astro';
+import ArticleList from '@components/ArticleList.astro';
+import { type Language } from '@i18n/utils';
+import { getProfileData } from '@lib/profile';
+
+interface Props {
+    lang: Language;
+}
+
+const { lang } = Astro.props;
+
+const { profile, profilePicture, fullName } = await getProfileData(lang);
+
+const researchAreas: any[] = []
+const publications: any[] = [];
+---
+<div>
+    <!-- Hero Section -->
+    <section class='flex items-center gap-12 border-b pb-12'>
+        <Hero
+                fullName={fullName}
+                title={profile.title}
+                description={profile.description}
+                profilePicture={profilePicture}
+                lang={lang}
+        />
+    </section>
+
+    <!-- Research Areas -->
+    <section class='py-12 border-b'>
+        <Grid gridTitle='Research Areas' gridItems={researchAreas} />
+    </section>
+
+    <!-- Recent Publications -->
+    <section class='py-12 border-t'>
+        <ArticleList listTitle='Recent Publications' listItems={publications} />
+    </section>
+</div>
