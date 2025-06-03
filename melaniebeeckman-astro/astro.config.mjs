@@ -4,7 +4,7 @@ import {defineConfig} from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 import react from '@astrojs/react';
-import {defaultLang, languages} from "@i18n/languages.js";
+import {defaultLang, languages} from "./src/i18n/languages.js";
 
 // https://astro.build/config
 export default defineConfig({

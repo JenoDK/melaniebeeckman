@@ -8,4 +8,11 @@ export const nl: Translations = {
         description: 'De pagina die je zoekt bestaat niet.',
         goHome: 'Ga naar de startpagina',
     },
+    nav: {
+        home: 'Home',
+        research: 'Onderzoek',
+        papers: 'Papers',
+        cv: 'Curriculum Vitae',
+        contact: 'Contact',
+    },
 }

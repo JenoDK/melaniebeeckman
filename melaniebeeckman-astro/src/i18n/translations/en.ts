@@ -8,4 +8,11 @@ export const en: Translations = {
         description: 'Sorry, the page you are looking for does not exist.',
         goHome: 'Go to the home page',
     },
+    nav: {
+        home: 'Home',
+        research: 'Research',
+        papers: 'Papers',
+        cv: 'Curriculum Vitae',
+        contact: 'Contact',
+    },
 }

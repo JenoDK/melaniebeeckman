@@ -1,0 +1,73 @@
+---
+import { languages } from '../i18n/languages';
+import { getLangFromUrl, type Language } from '../i18n/utils';
+
+// Get current URL and path info
+const currentUrl = Astro.url;
+const currentLang = getLangFromUrl(currentUrl);
+const pathname = currentUrl.pathname;
+
+// Extract the path after the language code
+const pathSegments = pathname.split('/');
+const restOfPath = pathSegments.slice(2).join('/'); // Skip the first empty segment and language code
+
+// Map language codes to country codes for flags
+const countryMap: Record<Language, string> = {
+    en: 'gb',
+    nl: 'nl',
+    fr: 'fr'
+};
+
+const currentLanguageLabel = languages[currentLang as keyof typeof languages];
+
+// Import flag CSS
+import 'flag-icons/css/flag-icons.min.css';
+---
+
+<!-- Desktop version (flex container) -->
+<div class="hidden md:flex gap-3 items-center justify-center">
+    {Object.entries(languages).map(([lang, label]) => {
+        const newPath = `/${lang}/${restOfPath}`;
+        const typedLang = lang as Language;
+        const countryCode = countryMap[typedLang];
+
+        return (
+                <a
+                        href={newPath}
+                        class={`flex items-center gap-1.5 hover:underline ${lang === currentLang ? 'font-bold underline' : 'font-normal'}`}
+                        title={label}
+                >
+                    <span class={`fi fi-${countryCode} w-5 h-5`}></span>
+                    <span>{label}</span>
+                </a>
+        );
+    })}
+</div>
+
+<!-- Mobile version (dropdown) -->
+<div class="dropdown dropdown-end md:hidden">
+    <div tabindex="0" role="button" class="btn btn-ghost m-1">
+        <span class={`fi fi-${countryMap[currentLang as Language]} mr-2 w-5 h-5`}></span>
+        <span>{currentLanguageLabel}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+        {Object.entries(languages).map(([lang, label]) => {
+            const newPath = `/${lang}/${restOfPath}`;
+            const typedLang = lang as Language;
+            const countryCode = countryMap[typedLang];
+
+            if (lang !== currentLang) {
+                return (
+                    <li>
+                        <a href={newPath} class="flex items-center gap-2">
+                            <span class={`fi fi-${countryCode} w-5 h-5`}></span>
+                            <span>{label}</span>
+                        </a>
+                    </li>
+                );
+            }
+            return null;
+        })}
+    </ul>
+</div>

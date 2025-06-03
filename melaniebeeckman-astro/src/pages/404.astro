@@ -1,9 +1,11 @@
 ---
 import Layout from '@layouts/Layout.astro'
-import { getLangFromUrl } from '@i18n/utils';
-import { translate } from '../i18n/utils';
+import { translate, getLangFromUrl } from '../i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 const lang = getLangFromUrl(Astro.url);
+const homeURL = getRelativeLocaleUrl(lang, "");
+
 ---
 
 <Layout title="404.title">
@@ -13,7 +15,7 @@ const lang = getLangFromUrl(Astro.url);
         <p class="text-lg text-base-content/80 mb-8">{translate(lang, '404.description')}</p>
         <div class="flex gap-4">
             <a
-                    href="/"
+                    href={homeURL}
                     class="btn btn-primary"
             >
                 {translate(lang, '404.goHome')}

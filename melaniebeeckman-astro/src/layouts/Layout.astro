@@ -1,6 +1,10 @@
 ---
 import "../styles/global.css";
 import { getLangFromUrl, translate } from '@i18n/utils';
+import BetterIcon from '@components/BetterIcon.astro';
+import Navbar from '@components/Navbar.astro';
+import Footer from '@components/Footer.astro';
+import LanguagePicker from '../components/LanguagePicker.astro';
 
 const lang = getLangFromUrl(Astro.url);
 
@@ -25,7 +29,47 @@ const translated_description = translate(lang, description);
 		<meta name='description' content={translated_description} />
 	</head>
 	<body>
-		<slot />
+		<div class={`bg-base-100 drawer lg:drawer-open`}>
+			<input id='my-drawer' type='checkbox' class='drawer-toggle' />
+			<!-- Drawer content -->
+			<div class='drawer-content bg-base-100'>
+				<div class='bg-base-100 z-50 text-base-content shadow-sm'>
+					<nav class='navbar'>
+						<div class='navbar-start'>
+							<label for='my-drawer' class='btn btn-square btn-ghost lg:hidden'>
+								<BetterIcon>
+									<svg
+										xmlns='http://www.w3.org/2000/svg'
+										fill='none'
+										viewBox='0 0 24 24'
+										stroke-width='1.5'
+										class='size-6 stroke-current'
+									>
+										<path
+											stroke-linecap='round'
+											stroke-linejoin='round'
+											d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5'></path>
+									</svg>
+								</BetterIcon>
+							</label>
+						</div>
+						<div class="navbar-end">
+							<LanguagePicker></LanguagePicker>
+						</div>
+					</nav>
+				</div>
+				<main class='p-8 pt-10 lg:pt-16 lg:max-w-5xl max-w-full mx-auto min-h-screen flex flex-col justify-between'>
+					<!-- Page content -->
+					<slot />
+					<Footer />
+				</main>
+			</div>
+			<!-- Drawer side -->
+			<div class='drawer-side z-40'>
+				<label for='my-drawer' aria-label='close sidebar' class='drawer-overlay'></label>
+				<Navbar />
+			</div>
+		</div>
 	</body>
 </html>
 

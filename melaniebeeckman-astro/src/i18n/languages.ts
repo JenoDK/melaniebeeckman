@@ -14,4 +14,11 @@ export type Translations = {
         description: string;
         goHome: string;
     };
+    nav: {
+        home: string;
+        research: string;
+        papers: string;
+        cv: string;
+        contact: string;
+    };
 }
