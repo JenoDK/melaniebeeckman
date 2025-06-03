@@ -1,16 +1,21 @@
 ---
 import "../styles/global.css";
-import { getLangFromUrl, translate } from '@i18n/utils';
+import { translate, type Language } from '@i18n/utils';
 import BetterIcon from '@components/BetterIcon.astro';
 import Navbar from '@components/Navbar.astro';
 import Footer from '@components/Footer.astro';
 import LanguagePicker from '../components/LanguagePicker.astro';
 
-const lang = getLangFromUrl(Astro.url);
+interface Props {
+	title?: string;
+	description?: string;
+	lang: Language;
+}
 
 const {
 	title = 'default_title',
 	description = 'default_description',
+	lang
 } = Astro.props
 
 const translated_title = translate(lang, title);
@@ -54,7 +59,7 @@ const translated_description = translate(lang, description);
 							</label>
 						</div>
 						<div class="navbar-end">
-							<LanguagePicker></LanguagePicker>
+							<LanguagePicker lang={lang}></LanguagePicker>
 						</div>
 					</nav>
 				</div>
@@ -67,7 +72,7 @@ const translated_description = translate(lang, description);
 			<!-- Drawer side -->
 			<div class='drawer-side z-40'>
 				<label for='my-drawer' aria-label='close sidebar' class='drawer-overlay'></label>
-				<Navbar />
+				<Navbar lang={lang} />
 			</div>
 		</div>
 	</body>

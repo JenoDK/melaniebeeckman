@@ -1,11 +1,14 @@
 ---
 import { Image } from 'astro:assets'
 import ProfilePicture from '@assets/profile_picture.png'
-import { getLangFromUrl, translate } from '../i18n/utils';
+import { type Language, translate } from '../i18n/utils';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
-const currentUrl = Astro.url;
-const lang = getLangFromUrl(currentUrl);
+interface Props {
+	lang: Language;
+}
+
+const { lang } = Astro.props;
 const homeURL = getRelativeLocaleUrl(lang, "");
 const researchUrl = getRelativeLocaleUrl(lang, "research");
 const papersUrl = getRelativeLocaleUrl(lang, "papers");

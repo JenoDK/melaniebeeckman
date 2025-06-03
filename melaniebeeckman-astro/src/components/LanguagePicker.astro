@@ -1,10 +1,14 @@
 ---
 import { languages } from '../i18n/languages';
-import { getLangFromUrl, type Language } from '../i18n/utils';
+import { type Language } from '../i18n/utils';
 
+interface Props {
+    lang: Language;
+}
+
+const { lang } = Astro.props;
 // Get current URL and path info
 const currentUrl = Astro.url;
-const currentLang = getLangFromUrl(currentUrl);
 const pathname = currentUrl.pathname;
 
 // Extract the path after the language code
@@ -18,7 +22,7 @@ const countryMap: Record<Language, string> = {
     fr: 'fr'
 };
 
-const currentLanguageLabel = languages[currentLang as keyof typeof languages];
+const currentLanguageLabel = languages[lang];
 
 // Import flag CSS
 import 'flag-icons/css/flag-icons.min.css';
@@ -26,15 +30,15 @@ import 'flag-icons/css/flag-icons.min.css';
 
 <!-- Desktop version (flex container) -->
 <div class="hidden md:flex gap-3 items-center justify-center">
-    {Object.entries(languages).map(([lang, label]) => {
-        const newPath = `/${lang}/${restOfPath}`;
-        const typedLang = lang as Language;
+    {Object.entries(languages).map(([l, label]) => {
+        const newPath = `/${l}/${restOfPath}`;
+        const typedLang = l as Language;
         const countryCode = countryMap[typedLang];
 
         return (
                 <a
                         href={newPath}
-                        class={`flex items-center gap-1.5 hover:underline ${lang === currentLang ? 'font-bold underline' : 'font-normal'}`}
+                        class={`flex items-center gap-1.5 hover:underline ${l === lang ? 'font-bold underline' : 'font-normal'}`}
                         title={label}
                 >
                     <span class={`fi fi-${countryCode} w-5 h-5`}></span>
@@ -47,17 +51,17 @@ import 'flag-icons/css/flag-icons.min.css';
 <!-- Mobile version (dropdown) -->
 <div class="dropdown dropdown-end md:hidden">
     <div tabindex="0" role="button" class="btn btn-ghost m-1">
-        <span class={`fi fi-${countryMap[currentLang as Language]} mr-2 w-5 h-5`}></span>
+        <span class={`fi fi-${countryMap[lang]} mr-2 w-5 h-5`}></span>
         <span>{currentLanguageLabel}</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1"><path d="m6 9 6 6 6-6"/></svg>
     </div>
     <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-        {Object.entries(languages).map(([lang, label]) => {
-            const newPath = `/${lang}/${restOfPath}`;
-            const typedLang = lang as Language;
+        {Object.entries(languages).map(([l, label]) => {
+            const newPath = `/${l}/${restOfPath}`;
+            const typedLang = l as Language;
             const countryCode = countryMap[typedLang];
 
-            if (lang !== currentLang) {
+            if (l !== lang) {
                 return (
                     <li>
                         <a href={newPath} class="flex items-center gap-2">

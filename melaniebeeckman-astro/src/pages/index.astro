@@ -1,5 +1,12 @@
 ---
-import IndexComponent from '@components/IndexComponent.astro';
+import Layout from '@layouts/Layout.astro';
+import Welcome from '@components/Welcome.astro';
+import { getAsLanguage } from '../i18n/utils';
+
+const lang = getAsLanguage(Astro.params.lang, Astro.currentLocale);
+
 ---
 
-<IndexComponent />
+<Layout lang={lang}>
+    <Welcome />
+</Layout>
