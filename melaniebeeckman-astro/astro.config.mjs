@@ -12,7 +12,8 @@ export default defineConfig({
     locales: Object.keys(languages),
     defaultLocale: defaultLang,
     routing: {
-      prefixDefaultLocale: true
+      prefixDefaultLocale: true,
+      redirectToDefaultLocale: false
     }
   },
   vite: {
