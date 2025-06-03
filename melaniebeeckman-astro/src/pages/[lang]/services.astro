@@ -1,8 +1,8 @@
 ---
-import BlocksRendererWrapper from '../../components/BlocksRendererWrapper';
-import "../styles/global.css";
-import { getAsLanguage, getLanguagePaths } from '../../i18n/utils';
-import Layout from '../../layouts/Layout.astro';
+import BlocksRendererWrapper from '@components/BlocksRendererWrapper';
+import "@styles/global.css";
+import { getAsLanguage, getLanguagePaths } from '@i18n/utils';
+import Layout from '@layouts/Layout.astro';
 
 const STRAPI_URL = import.meta.env.STRAPI_API_URL;
 const STRAPI_TOKEN = import.meta.env.STRAPI_API_TOKEN;
@@ -34,7 +34,7 @@ export function getStaticPaths() {
                 {services.map(service => (
                         <li>
                             <h2>{service.name}</h2>
-                            <BlocksRendererWrapper content={service.description} />
+                            <BlocksRendererWrapper content={service.description}/>
                         </li>
                 ))}
             </ul>
