@@ -3,5 +3,5 @@ import { defaultLang } from '../i18n/languages';
 
 const preferredLang = Astro.currentLocale ?? defaultLang;
 
-return Astro.redirect(`/${preferredLang}/404`, 302);
+return Astro.rewrite(`/${preferredLang}/404`);
 ---
