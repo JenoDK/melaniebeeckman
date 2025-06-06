@@ -30,10 +30,10 @@ export function getStaticPaths() {
 
 <Layout title={contactPage.title} lang={lang}>
     <main class="container mx-auto max-w-4xl">
-        <h1 class="text-4xl font-bold text-center mb-8">{contactPage.title}</h1>
+        <h1 class="text-4xl font-bold mb-8">{contactPage.title}</h1>
 
         <!-- Contact Introduction -->
-        <div class="prose prose-lg mx-auto mb-12 text-center">
+        <div class="prose prose-lg">
             <Markdown content={contactPage.contact_intro} />
         </div>
 
@@ -70,10 +70,12 @@ export function getStaticPaths() {
                 </div>
             </div>
 
-            <a href={mailtoLink} class="btn btn-primary">
-                <Icon name="mdi:email-outline" class="w-5 h-5 mr-2" />
-                Stuur een e-mail
-            </a>
+            <div>
+                <a href={mailtoLink} class="btn btn-primary">
+                    <Icon name="mdi:email-outline" class="w-5 h-5 mr-2" />
+                    Stuur een e-mail
+                </a>
+            </div>
 
         </div>
 

@@ -61,7 +61,8 @@
       }
     },
     "locationId": {
-      "type": "uid"
+      "type": "uid",
+      "targetField": "name"
     },
     "mapUrl": {
       "type": "string"

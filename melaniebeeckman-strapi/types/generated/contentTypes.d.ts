@@ -659,7 +659,7 @@ export interface ApiLocationLocation extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::location.location'
     >;
-    locationId: Schema.Attribute.UID;
+    locationId: Schema.Attribute.UID<'name'>;
     mapUrl: Schema.Attribute.String;
     name: Schema.Attribute.String &
       Schema.Attribute.Required &
