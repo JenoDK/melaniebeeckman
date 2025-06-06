@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "faq_categories",
+  "info": {
+    "singularName": "faq-category",
+    "pluralName": "faq-categories",
+    "displayName": "FAQCategory"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "category": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": true
+    }
+  }
+}

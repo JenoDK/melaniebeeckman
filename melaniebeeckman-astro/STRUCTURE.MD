@@ -1,116 +1,114 @@
-# Clinical Psychologist Website Guide
+# Websitestructuur - Klinisch Psycholoog
 
-A website for a clinical psychologist needs to be professional, informative, and build trust. It should provide potential clients with the information they need to understand the psychologist's approach, services, and how to seek help.
+---
 
-Here's a breakdown of essential and recommended pages/content:
+## 1. Home / Welkom
 
-## I. Essential Pages/Content:
+### Paginatitel / Headline
+*   Klinisch Psycholoog [Naam Psycholoog] in [Stad/Regio]
 
-### Homepage:
-- **Clear Headline:** Immediately state who they are and who they help (e.g., "Clinical Psychologist specializing in anxiety and trauma for adults").
-- **Brief Introduction:** A welcoming message and a concise overview of their practice and philosophy.
-- **Services Overview:** Briefly mention key services offered, with links to more detailed pages.
-- **Call to Action (CTA):** Clear guidance on what to do next (e.g., "Schedule a Consultation," "Learn More About Services," "Contact Us").
-- **Professional Photo:** (Optional but Recommended): A warm, professional headshot can help build rapport.
-- **Trust Signals:** Mention of licenses, affiliations (if applicable and brief).
+### Welkomstboodschap
+*   Een korte, warme paragraaf.![img.png](img.png)
+> "Welkom. Ik ben [Naam], klinisch psycholoog. Ik bied een veilige plek waar je terechtkan met je zorgen, van stress en angst tot levensvragen. Samen gaan we op zoek naar inzicht en veerkracht."
 
-### About Page (or "About [Psychologist's Name]"):
-- **Professional Bio:**
-    - Education, degrees, and certifications.
-    - Years of experience.
-    - Licensing information (state, license number).
-    - Areas of specialization and expertise.
-    - Therapeutic approach/philosophy (e.g., CBT, DBT, psychodynamic, humanistic, integrative). Explain this in accessible language.
-- **Personal Statement:** (Optional but often helpful): Why they chose this profession, what they find rewarding, their values in therapy. This can help humanize them.
-- **Professional Photo.**
+### Kernaanbod (Visuele Blokken)
+*   **Individuele Therapie** -> (linkt naar de pagina 'Aanbod')
+*   **Eerstelijnspsychologische Zorg (ELP)** -> (linkt naar de pagina 'Aanbod')
+*   **Mindfulness & Yoga** -> (linkt naar de pagina 'Aanbod')
 
-### Services Page(s):
-- **Detailed Description of Services Offered:**
-    - Individual Therapy
-    - Couples Therapy (if applicable)
-    - Family Therapy (if applicable)
-    - Group Therapy (if applicable)
-    - Psychological Assessments/Testing (if applicable)
-    - Workshops/Presentations (if applicable)
-- **Specific Issues/Conditions Treated:**
-    - e.g., Anxiety, Depression, Trauma/PTSD, Stress Management, Relationship Issues, Grief & Loss, Life Transitions, Self-Esteem, etc.
-    - Provide a brief, empathetic description for each, explaining how they can help.
-- **Target Clientele:** (e.g., Adults, Adolescents, Children, Couples, Specific Professions).
-- **Explanation of the Therapeutic Process:** What a client might expect in a typical session or during the course of therapy for a particular issue.
+### Call to Action (CTA)
+*   Duidelijke knop: `[ Maak een afspraak ]` -> (linkt naar de 'Contact' pagina)
 
-### FAQ (Frequently Asked Questions):
-- **Practical Questions:**
-    - Session length and frequency.
-    - Fees and payment methods (be transparent or state how to inquire).
-    - Insurance information (which plans are accepted, out-of-network benefits process).
-    - Cancellation policy.
-    - Office location and accessibility (if in-person).
-    - Telehealth/Online therapy options.
-- **Therapy-Related Questions:**
-    - "What is therapy like?"
-    - "How do I know if I need therapy?"
-    - "How long does therapy last?"
-    - "Is therapy confidential?" (Explain limits of confidentiality).
-    - "What's the difference between a psychologist, psychiatrist, counselor, etc.?" (Optional, but can be helpful).
+---
 
-### Contact Page:
-- **Multiple Contact Methods:**
-    - Secure contact form (essential for initial inquiries).
-    - Phone number (professional line).
-    - Email address (professional, consider a disclaimer about email security for sensitive info).
-- **Office Location (if applicable):**
-    - Full address.
-    - Map (embedded Google Map).
-    - Parking/transportation information.
-- **Office Hours** (or hours for returning calls/emails).
-- **Emergency Information:** Crucially, state clearly that the website/contact form is NOT for emergencies and provide resources like a local crisis line number or "call 911/go to the nearest emergency room."
+## 2. Over Mij
 
-### Privacy Policy:
-- Required by law in many regions (e.g., GDPR, HIPAA if applicable to how they handle online data).
-- How website user data is collected, used, and protected.
-- Use of cookies.
-- Information about confidentiality in therapy (distinct from website privacy but can be linked or briefly mentioned).
+### Professionele foto
+*   Vriendelijke, toegankelijke portretfoto.
 
-### Terms of Service / Website Disclaimer:
-- The information on the website is for informational purposes only and does not constitute professional advice or a therapist-client relationship.
-- Disclaimers about website accuracy.
-- Emergency contact disclaimer (reiterate from Contact page).
+### Wie ben ik (Visie & Werkwijze)
+*   Korte introductie over je visie en werkwijze in toegankelijke taal.
+> "Ik geloof in een aanpak op maat, waarbij we vertrekken vanuit jouw unieke verhaal. Mijn stijl is warm, zonder oordeel en gebaseerd op wetenschappelijk onderbouwde methoden zoals..."
 
-## II. Recommended Pages/Content (Enhance Value and SEO):
+### Opleiding & Erkenning
+*   **Titel:** Klinisch Psycholoog
+*   **Diploma:** Master in de Klinische Psychologie, [Universiteit, Jaar]
+*   **Bijkomende opleidingen:** [bv. Postgraduaat X, Opleiding Mindfulness, Yoga Teacher Training]
+*   **Erkenningsnummer Psychologencommissie:** [Nummer invullen]
+*   **Visumnummer FOD Volksgezondheid:** [Nummer invullen]
+*   **Lidmaatschap:** [bv. Vlaamse Vereniging van Klinisch Psychologen (VVKP)]
 
-### Blog / Articles / Resources Section:
-- **Content:** Write articles on mental health topics, coping strategies, understanding different conditions, benefits of therapy, etc.
-- **Benefits:**
-    - Positions the psychologist as an expert.
-    - Provides value to potential and current clients.
-    - Excellent for SEO (Search Engine Optimization).
-    - Can be shared on social media.
-- **External Resources:** Links to reputable mental health organizations, crisis lines, helpful books, or local community resources.
+### Onderzoek & Publicaties (Nieuwe Sectie)
+*   Een korte inleidende zin.
+> "Naast mijn klinische werk, draag ik ook bij aan het vakgebied via onderzoek en publicaties. Hieronder vindt u een selectie:"
+*   Lijst van publicaties/artikels/referenties.
+    *   *Voorbeeld:* "[Titel van artikel]", Gepubliceerd in [Naam Tijdschrift/Platform], [Jaar].
+    *   *Voorbeeld:* "Referentie in media: [Naam van programma/krant] over [Onderwerp]", [Datum].
 
-### New Client Information / Getting Started Page:
-- What to expect during the first session.
-- Intake forms (link to downloadable PDFs or a secure patient portal if used).
-- Information about the initial consultation process.
+---
 
-### Testimonials / Endorsements (Use with EXTREME CAUTION and Ethical Consideration):
-- **Ethical Guidelines:** Psychologists have strict ethical guidelines regarding testimonials from current or former clients (e.g., from APA, BPS). In many cases, soliciting testimonials from clients is unethical due to the power imbalance and potential for undue influence.
-- **Alternatives:**
-    - Endorsements from professional colleagues (if appropriate).
-    - Focus on qualifications, experience, and therapeutic approach to build trust.
-- If used (and ethically permissible in their region/context): Must be anonymous or with explicit, uncoerced consent, and should not exploit the client. Always prioritize client welfare and confidentiality. Often, it's best to avoid client testimonials altogether.
+## 3. Aanbod
 
-### Telehealth / Online Therapy Page:
-- If offered, a dedicated page explaining how it works, the platform used, benefits, and any limitations.
-- Security and privacy measures for online sessions.
+### Individuele Psychologische Begeleiding
+*   **Voor wie:** Volwassenen en jongvolwassenen.
+*   **Met welke klachten kan je bij mij terecht?**
+    *   Stress, burn-out, angstklachten, depressieve gevoelens, laag zelfbeeld, rouw, levensvragen, etc.
 
-## III. General Website Elements:
-- **Professional Design & Branding:** Consistent look and feel.
-- **Mobile Responsiveness:** Essential.
-- **Accessibility (WCAG compliance):** Ensure the site is usable by people with disabilities.
-- **Fast Loading Speed.**
-- **Clear Call to Actions (CTAs)** throughout the site.
-- **Footer:** Copyright, links to Privacy Policy, Terms, sitemap, contact info.
-- **Favicon.**
-- **SEO Basics:** Good title tags, meta descriptions, semantic HTML.
+### Eerstelijnspsychologische Zorg (ELP)
+*   **Wat is het?** Uitleg over het aanbod voor milde tot matige klachten via de conventie.
+*   **Hoe werkt het?** Uitleg over het verwijsvoorschrift van de arts.
+*   **Tarieven:** €11 per sessie (of €4 bij verhoogde tegemoetkoming).
 
-When planning content, the key is to be client-centered, providing clear, accessible, and reassuring information that helps individuals take the next step in seeking support. Always ensure the content adheres to professional ethical guidelines and local regulations for psychologists.
+### Mindfulness & Yoga
+*   **Wat is de meerwaarde?** Uitleg over de combinatie van gesprek, lichaamswerk en aandachtstraining.
+
+---
+
+## 4. Veelgestelde Vragen (FAQ) - (Nieuwe Pagina)
+
+### Over Therapie
+*   **Vraag:** Hoe weet ik of therapie iets voor mij is?
+    *   **Antwoord:** Korte, geruststellende uitleg over wanneer hulp zoeken zinvol is.
+*   **Vraag:** Hoe lang duurt een therapietraject?
+    *   **Antwoord:** Uitleg dat dit varieert en in samenspraak wordt bepaald.
+*   **Vraag:** Is alles wat ik vertel vertrouwelijk?
+    *   **Antwoord:** Uitleg over het beroepsgeheim.
+
+### Over Eerstelijnspsychologische Zorg (ELP)
+*   **Vraag:** Wat is het verschil tussen ELP en gewone therapie?
+    *   **Antwoord:** Uitleg over de focus, duur en het tarief.
+*   **Vraag:** Kom ik in aanmerking voor het ELP-tarief?
+    *   **Antwoord:** Uitleg over de noodzaak van een verwijsvoorschrift en de doelgroep.
+
+---
+
+## 5. Praktische Info & Tarieven
+
+### Werkwijze
+*   **Eerste gesprek:** Wat te verwachten (duur, doel).
+*   **Vervolgsessies:** Duur en frequentie.
+*   **Annulatiebeleid:** Duidelijke regels (bv. kosteloos annuleren tot 48u op voorhand).
+
+### Tarieven
+*   **Kennismakingsgesprek (60 min):** € [bedrag]
+*   **Individuele sessie (50 min):** € [bedrag]
+*   **ELP-sessie:** €11 (of €4 met verhoogde tegemoetkoming)
+*   **Terugbetaling:** Info over mutualiteiten.
+*   **Betaling:** Betaalmethoden (Payconiq, cash).
+
+---
+
+## 6. Contact
+
+### Contactgegevens
+*   **Telefoon:** [Telefoonnummer]
+*   **E-mail:** [E-mailadres]
+*   **Contactformulier:** Velden voor naam, e-mail en bericht.
+
+### Locatie
+*   **Adres:** [Straat en huisnummer, Postcode en Gemeente]
+*   **Kaart:** [Ingesloten Google Maps kaartje]
+*   **Bereikbaarheid:** [Info over parking, openbaar vervoer].
+
+### **BELANGRIJK: Noodgevallen**
+> Deze website en het contactformulier zijn niet bedoeld voor noodgevallen. In geval van een crisis, neem onmiddellijk contact op met je huisarts, de dichtstbijzijnde spoeddienst of bel de Zelfmoordlijn op het gratis nummer **1813**.

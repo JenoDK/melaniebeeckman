@@ -1,0 +1,37 @@
+{
+  "kind": "singleType",
+  "collectionName": "contactpages",
+  "info": {
+    "singularName": "contactpage",
+    "pluralName": "contactpages",
+    "displayName": "Contact page",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "contact_intro": {
+      "type": "richtext"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "locations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::location.location"
+    }
+  }
+}

@@ -1,9 +1,9 @@
 ---
 import Hero from '@components/Hero.astro';
-import Grid from '@components/Grid.astro';
-import ArticleList from '@components/ArticleList.astro';
 import { type Language } from '@i18n/utils';
-import { getProfileData } from '@lib/profile';
+import { getHomepage } from '@lib/homepage';
+import ServiceCards from '@components/ServiceCards.astro';
+import Faqs from '@components/Faqs.astro';
 
 interface Props {
     lang: Language;
@@ -11,30 +11,30 @@ interface Props {
 
 const { lang } = Astro.props;
 
-const { profile, profilePicture, fullName } = await getProfileData(lang);
-
-const researchAreas: any[] = []
-const publications: any[] = [];
+const homePage = await getHomepage(lang);
 ---
 <div>
-    <!-- Hero Section -->
-    <section class='flex items-center gap-12 border-b pb-12'>
-        <Hero
-                fullName={fullName}
-                title={profile.title}
-                description={profile.description}
-                profilePicture={profilePicture}
-                lang={lang}
-        />
-    </section>
+    <!-- Content with relative positioning to appear above the background -->
+    <div>
+        {homePage &&
+                <section class='flex items-center gap-12'>
+                    <Hero
+                            fullName={homePage.name}
+                            title={homePage.title}
+                            description={homePage.description}
+                            profilePicture={homePage.profilePicture}
+                            lang={lang}
+                    />
+                </section>
 
-    <!-- Research Areas -->
-    <section class='py-12 border-b'>
-        <Grid gridTitle='Research Areas' gridItems={researchAreas} />
-    </section>
+                <div class="divider"></div>
 
-    <!-- Recent Publications -->
-    <section class='py-12 border-t'>
-        <ArticleList listTitle='Recent Publications' listItems={publications} />
-    </section>
+                <ServiceCards services={homePage.services} lang={lang} />
+
+                <div class="divider"></div>
+
+                <Faqs faqs={homePage.faqs} lang={lang} />
+
+        }
+    </div>
 </div>

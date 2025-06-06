@@ -1,0 +1,52 @@
+---
+import { type Language } from '@i18n/utils';
+import { type Faq } from '@interfaces/faq';
+import Markdown from '@components/Markdown.astro';
+import { translate } from '../i18n/utils';
+
+interface Props {
+    faqs?: Faq[];
+    lang: Language;
+}
+
+const { faqs, lang } = Astro.props;
+
+// Group FAQs by category
+const faqsByCategory = faqs?.reduce((acc, faq) => {
+    const categoryName = faq.faqCategory.category;
+    if (!acc[categoryName]) {
+        acc[categoryName] = [];
+    }
+    acc[categoryName].push(faq);
+    return acc;
+}, {} as Record<string, Faq[]>) || {};
+
+// Sort categories alphabetically
+const sortedCategories = Object.keys(faqsByCategory).sort();
+---
+
+{faqs && faqs.length > 0 && (
+<div class="my-12">
+    <h2 class="text-3xl font-bold text-center mb-8">{translate(lang, 'faqs.title')}</h2>
+
+    {sortedCategories.map((categoryName, categoryIndex) => (
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold mb-4 text-primary">{categoryName}</h3>
+
+                <div class="space-y-2">
+                    {faqsByCategory[categoryName].map((faq, faqIndex) => (
+                            <div class="collapse collapse-arrow bg-base-100 shadow-sm border border-base-200">
+                                <input type="checkbox" />
+                                <div class="collapse-title font-medium">
+                                    {faq.question}
+                                </div>
+                                <div class="collapse-content prose prose-sm max-w-none">
+                                    <Markdown content={faq.answer} />
+                                </div>
+                            </div>
+                    ))}
+                </div>
+            </div>
+    ))}
+</div>
+    )}

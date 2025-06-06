@@ -15,4 +15,17 @@ export const nl: Translations = {
         cv: 'Curriculum Vitae',
         contact: 'Contact',
     },
+    home: {
+        welcome: 'Welkom, ik ben',
+    },
+    services: {
+        title: 'Diensten',
+        moreInfo: 'Meer informatie',
+        allServices: 'Bekijk alle diensten',
+        servicePrices: 'Prijzen',
+        appointment: 'Afspraak'
+    },
+    faqs: {
+        title: 'Veelgestelde vragen',
+    }
 }

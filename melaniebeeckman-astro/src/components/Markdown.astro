@@ -1,0 +1,13 @@
+---
+import { markdownAsHtml } from '../utils/utils';
+interface Props {
+    content: string;
+}
+
+const {content} = Astro.props
+
+const html = markdownAsHtml(content);
+
+---
+
+<div class="prose" set:html={html}></div>

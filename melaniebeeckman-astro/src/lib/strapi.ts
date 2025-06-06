@@ -2,7 +2,7 @@ import type { Language } from '@i18n/utils.ts';
 
 interface Props {
     endpoint: string;
-    query?: Record<string, string>;
+    query?: string;
     wrappedByKey?: string;
     wrappedByList?: boolean;
     locale?: Language;
@@ -31,17 +31,12 @@ export default async function fetchApi<T>({
         endpoint = endpoint.slice(1);
     }
 
-    const url = new URL(`${STRAPI_URL}/api/${endpoint}`);
+    const url = new URL(`${STRAPI_URL}/api/${endpoint}?${query ?? ''}`);
 
     if (locale) {
         url.searchParams.append('locale', locale);
     }
 
-    if (query) {
-        Object.entries(query).forEach(([key, value]) => {
-            url.searchParams.append(key, value);
-        });
-    }
     const res = await fetch(url.toString(), {
         headers: {
             'Authorization': `Bearer ${STRAPI_TOKEN}`

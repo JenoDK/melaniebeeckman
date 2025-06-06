@@ -15,4 +15,17 @@ export const en: Translations = {
         cv: 'Curriculum Vitae',
         contact: 'Contact',
     },
+    home: {
+        welcome: 'Welcome, I\'m',
+    },
+    services: {
+        title: 'Services',
+        moreInfo: 'More information',
+        allServices: 'View all services',
+        servicePrices: 'Pricing',
+        appointment: 'Appointment'
+    },
+    faqs: {
+        title: 'Frequently Asked Questions',
+    }
 }

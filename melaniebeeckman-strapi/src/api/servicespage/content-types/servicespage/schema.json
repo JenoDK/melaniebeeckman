@@ -1,0 +1,28 @@
+{
+  "kind": "singleType",
+  "collectionName": "servicespages",
+  "info": {
+    "singularName": "servicespage",
+    "pluralName": "servicespages",
+    "displayName": "Services page",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "services": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service.service"
+    }
+  }
+}

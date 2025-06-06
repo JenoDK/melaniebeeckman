@@ -1,0 +1,90 @@
+---
+import { Image } from 'astro:assets';
+import { type Language } from '@i18n/utils';
+import { type Service } from '@interfaces/service';
+import { getMediaUrl } from '@interfaces/strapi-media';
+import Markdown from '@components/Markdown.astro';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { translate } from '../i18n/utils';
+
+interface Props {
+    services?: Service[];
+    lang: Language;
+}
+
+const { services, lang } = Astro.props;
+---
+
+{services && services.length > 0 && (
+<div class="my-12">
+    <h2 class="text-3xl font-bold text-center mb-8">{translate(lang, 'services.title')}</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {services.map((service) => (
+                <div class="card bg-base-200 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                    <figure class="px-6 pt-6">
+                        {service.icon && (
+                                <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
+                                    <Image
+                                            src={getMediaUrl(service.icon)}
+                                            width={48}
+                                            height={48}
+                                            alt={service.icon.alternativeText || service.title}
+                                            class="object-contain"
+                                    />
+                                </div>
+                        )}
+                    </figure>
+
+                    <div class="card-body">
+                        <h3 class="card-title text-primary">{service.title}</h3>
+
+                        {service.description && (
+                                <div class="mt-2 text-sm">
+                                    <Markdown content={service.description}/>
+                                </div>
+                        )}
+
+                        {service.showPrices && service.prices && service.prices.length > 0 && (
+                                <div class="mt-4">
+                                    <h4 class="font-semibold text-base-content/80 mb-2">{translate(lang, 'services.servicePrices')}</h4>
+                                    <ul class="space-y-2">
+                                        {service.prices.map((price) => (
+                                                <li class="flex justify-between">
+                                                    <span>{price.title}</span>
+                                                    {price.priceInEuros && (
+                                                            <span class="font-medium">€{price.priceInEuros}</span>
+                                                    )}
+                                                </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                        )}
+
+                        <div class="card-actions justify-between mt-4">
+                            <a
+                                    target={service.appointmentLink ? '_blank' : '_self'}
+                                    href={service.appointmentLink ?? getRelativeLocaleUrl(lang, `contact`)}
+                                    class="btn btn-primary btn-sm"
+                            >
+                                {translate(lang, 'services.appointment')}
+                            </a>
+                            <a
+                                    href={getRelativeLocaleUrl(lang, `services/${service.slug}`)}
+                                    class="btn btn-outline btn-sm"
+                            >
+                                {translate(lang, 'services.moreInfo')}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+        ))}
+    </div>
+
+    <div class="flex justify-center mt-8">
+        <a href={getRelativeLocaleUrl(lang, 'services')} class="btn btn-outline btn-wide">
+            {translate(lang, 'services.allServices')}
+        </a>
+    </div>
+</div>
+    )}

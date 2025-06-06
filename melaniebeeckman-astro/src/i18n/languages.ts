@@ -21,4 +21,17 @@ export type Translations = {
         cv: string;
         contact: string;
     };
+    home: {
+        welcome: string;
+    }
+    services: {
+        title: string;
+        moreInfo: string;
+        allServices: string;
+        servicePrices: string;
+        appointment: string;
+    }
+    faqs: {
+        title: string;
+    }
 }

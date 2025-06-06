@@ -1,21 +1,46 @@
 // src/lib/profile.ts
-import type { Profile } from '@interfaces/profile';
 import type { Language } from '@i18n/utils';
 import fetchApi from '@lib/strapi';
-import { DEFAULT_PROFILE } from '@interfaces/profile';
 import ProfilePicture from '@assets/profile_picture.png';
+import qs from 'qs';
+import type { StrapiMedia } from '@interfaces/strapi-media.ts';
+
+export interface Profile {
+    id: number;
+    email: string;
+    firstname: string;
+    lastname: string;
+    phone: string;
+    title: string;
+    description: string;
+    profilePicture?: StrapiMedia;
+}
+
+export const DEFAULT_PROFILE: Profile = {
+    id: 1,
+    email: "marie.curie@research.org",
+    firstname: "Marie",
+    lastname: "Curie",
+    phone: "+33 1 23 45 67 89",
+    title: "Professor of Physics & Chemistry",
+    description: "Professor of Physics & Chemistry",
+};
 
 /**
  * Fetches the profile data from Strapi with proper error handling and default values
  */
 export async function getProfile(lang: Language): Promise<Profile> {
     try {
+        const query = qs.stringify({
+            populate: 'profilePicture',
+        }, {
+            encodeValuesOnly: true, // prettify URL
+        });
+
         const profile = await fetchApi<Profile>({
             endpoint: 'profile',
             wrappedByKey: 'data',
-            query: {
-                'populate': 'profilePicture'
-            },
+            query,
             locale: lang
         });
 
