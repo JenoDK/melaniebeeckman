@@ -450,7 +450,12 @@ export interface ApiContactpageContactpage extends Struct.SingleTypeSchema {
     };
   };
   attributes: {
-    contact_intro: Schema.Attribute.RichText;
+    contact_intro: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
