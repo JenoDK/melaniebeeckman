@@ -26,5 +26,18 @@ export const fr: Translations = {
     },
     faqs: {
         title: 'Questions fréquemment posées',
+    },
+    contact: {
+        locations: "Emplacements",
+        contactInfo: 'Informations de contact',
+        phone: "Téléphone",
+        email: "E-mail",
+        sendEmailBtn: "Envoyer un e-mail",
+        directions: "Itinéraire",
+        emailTemplate: {
+            subject: "Demande d'information",
+            body: "Chère Melanie Beeckman,\n\n\n\nCordialement,"
+        }
+
     }
 }

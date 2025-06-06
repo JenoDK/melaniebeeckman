@@ -3,7 +3,7 @@ import Layout from '@layouts/Layout.astro';
 import { getContactPage } from '@lib/contactpage';
 import Markdown from '@components/Markdown.astro';
 import { Icon } from 'astro-icon/components';
-import { getAsLanguage, getLanguagePaths } from '@i18n/utils';
+import { getAsLanguage, getLanguagePaths, translate } from '@i18n/utils';
 
 const lang = getAsLanguage(Astro.params.lang, Astro.currentLocale);
 
@@ -11,17 +11,9 @@ const lang = getAsLanguage(Astro.params.lang, Astro.currentLocale);
 const contactPage = await getContactPage(lang);
 
 // Create email mailto link with subject and body
-const emailSubject = "Informatie aanvraag";
-const emailBody = "Hallo,\n\nIk heb een vraag over uw diensten.\n\nMet vriendelijke groet,";
+const emailSubject = translate(lang, 'contact.emailTemplate.subject') ?? '';
+const emailBody = translate(lang, 'contact.emailTemplate.body') ?? '';
 const mailtoLink = `mailto:${contactPage.email}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-
-// Translations (this would come from your i18n setup)
-const t = {
-    locations: {
-        title: 'Locaties',
-        directions: 'Routebeschrijving',
-    }
-};
 
 export function getStaticPaths() {
     return getLanguagePaths();
@@ -40,7 +32,7 @@ export function getStaticPaths() {
         <div class="divider"></div>
 
         <div class="flex flex-col gap-4">
-            <h2 class="text-2xl font-semibold">Contact Informatie</h2>
+            <h2 class="text-2xl font-semibold">{translate(lang, 'contact.contactInfo')}</h2>
 
             <div class="grid md:grid-cols-2 gap-8 mb-8">
                 <!-- Phone -->
@@ -49,7 +41,7 @@ export function getStaticPaths() {
                         <Icon name="mdi:phone" class="w-6 h-6 text-primary" />
                     </div>
                     <div>
-                        <p class="font-medium">Telefoon</p>
+                        <p class="font-medium">{translate(lang, 'contact.phone')}</p>
                         <a href={`tel:${contactPage.phone}`} class="text-primary hover:underline">
                             {contactPage.phone}
                         </a>
@@ -62,7 +54,7 @@ export function getStaticPaths() {
                         <Icon name="mdi:email" class="w-6 h-6 text-primary" />
                     </div>
                     <div>
-                        <p class="font-medium">E-mail</p>
+                        <p class="font-medium">{translate(lang, 'contact.email')}</p>
                         <a href={mailtoLink} class="text-primary hover:underline">
                             {contactPage.email}
                         </a>
@@ -73,7 +65,7 @@ export function getStaticPaths() {
             <div>
                 <a href={mailtoLink} class="btn btn-primary">
                     <Icon name="mdi:email-outline" class="w-5 h-5 mr-2" />
-                    Stuur een e-mail
+                    {translate(lang, 'contact.sendEmailBtn')}
                 </a>
             </div>
 
@@ -84,7 +76,7 @@ export function getStaticPaths() {
         <!-- Locations -->
         {contactPage.locations && contactPage.locations.length > 0 && (
                 <div>
-                    <h2 class="text-2xl font-semibold mb-6 pb-2">{t.locations.title}</h2>
+                    <h2 class="text-2xl font-semibold mb-6 pb-2">{translate(lang, 'contact.locations')}</h2>
                     <div class="grid md:grid-cols-2 gap-8">
                         {contactPage.locations.map(location => (
                                 <div class="border-l-4 border-primary pl-4">
@@ -100,7 +92,7 @@ export function getStaticPaths() {
                                                     class="btn btn-outline btn-sm"
                                             >
                                                 <Icon name="mdi:map-marker" class="w-4 h-4 mr-1" />
-                                                {t.locations.directions}
+                                                {translate(lang, 'contact.directions')}
                                             </a>
                                     )}
                                 </div>

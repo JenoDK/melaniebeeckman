@@ -32,5 +32,17 @@ export type Translations = {
     }
     faqs: {
         title: string;
+    },
+    contact: {
+        locations: string;
+        contactInfo: string;
+        phone: string;
+        email: string;
+        sendEmailBtn: string;
+        directions: string;
+        emailTemplate: {
+            subject: string;
+            body: string;
+        }
     }
 }

@@ -26,5 +26,18 @@ export const en: Translations = {
     },
     faqs: {
         title: 'Frequently Asked Questions',
+    },
+    contact: {
+        locations: "Locations",
+        contactInfo: 'Contact information',
+        phone: "Phone",
+        email: "Email",
+        sendEmailBtn: "Send an email",
+        directions: "Get directions",
+        emailTemplate: {
+            subject: "Information request",
+            body: "Dear Melanie Beeckman,\n\n\n\nKind regards,"
+        }
+
     }
 }

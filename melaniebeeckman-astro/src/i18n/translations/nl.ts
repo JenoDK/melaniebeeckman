@@ -26,5 +26,19 @@ export const nl: Translations = {
     },
     faqs: {
         title: 'Veelgestelde vragen',
+    },
+    contact: {
+        locations: "Locaties",
+        contactInfo: 'Contact informatie',
+        phone: "Telefoon",
+        email: "E-mail",
+        sendEmailBtn: "Stuur een e-mail",
+        directions: "Routebeschrijving",
+        emailTemplate: {
+            subject: "Informatie aanvraag",
+            body: "Beste Melanie Beeckman,\n\n\n\nMet vriendelijke groet,"
+        }
+
     }
+
 }
