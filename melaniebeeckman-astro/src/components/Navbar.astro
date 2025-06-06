@@ -11,9 +11,7 @@ interface Props {
 const { lang } = Astro.props;
 
 const homeURL = getRelativeLocaleUrl(lang, "");
-const researchUrl = getRelativeLocaleUrl(lang, "research");
-const papersUrl = getRelativeLocaleUrl(lang, "papers");
-const cvUrl = getRelativeLocaleUrl(lang, "cv");
+const aboutUrl = getRelativeLocaleUrl(lang, "about");
 const contactUrl = getRelativeLocaleUrl(lang, "contact");
 
 const { profile, profilePicture, fullName } = await getProfileData(lang);
@@ -39,11 +37,8 @@ const { profile, profilePicture, fullName } = await getProfileData(lang);
                         <a href={homeURL} class='text-lg'>{translate(lang, 'nav.home')}</a>
 					</li>
 					<li>
-						<a href={cvUrl} class='text-lg'>{translate(lang, 'nav.aboutMe')}</a>
+						<a href={aboutUrl} class='text-lg'>{translate(lang, 'nav.aboutMe')}</a>
 					</li>
-					<li>
-                        <a href={cvUrl} class='text-lg'>{translate(lang, 'nav.services')}</a>
-                    </li>
 					<li>
 						<a href={contactUrl} class='text-lg'>{translate(lang, 'nav.contact')}</a>
 					</li>

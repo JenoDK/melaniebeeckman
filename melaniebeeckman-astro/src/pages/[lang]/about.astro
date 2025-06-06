@@ -1,0 +1,109 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Markdown from '@components/Markdown.astro';
+import { getAsLanguage, getLanguagePaths, translate } from '@i18n/utils';
+import { getMediaUrl } from '@interfaces/strapi-media';
+import { Icon } from 'astro-icon/components';
+import { getAboutPage } from '@lib/aboutmepage';
+
+const lang = getAsLanguage(Astro.params.lang, Astro.currentLocale);
+
+// Fetch about page data
+const aboutPage = await getAboutPage(lang);
+
+// Get up to 3 pictures if available
+const pictures = aboutPage.pictures?.slice(0, 3) || [];
+
+export function getStaticPaths() {
+    return getLanguagePaths();
+}
+---
+
+<Layout title={aboutPage.title} lang={lang}>
+    <main class="container mx-auto max-w-4xl">
+        <h1 class="text-4xl font-bold mb-8">{aboutPage.title}</h1>
+
+        <div class="mb-16">
+            <!-- About Me Section -->
+            <div class="flex flex-col md:flex-row gap-8 items-start">
+                {pictures[0] && (
+                        <div class="md:w-1/3">
+                            <img
+                                    src={getMediaUrl(pictures[0])}
+                                    alt={pictures[0].alternativeText || "Melanie Beeckman"}
+                                    class="rounded-lg shadow-lg w-full object-cover aspect-[3/4]"
+                            />
+                        </div>
+                )}
+                <div class={`${pictures[0] ? 'md:w-2/3' : 'w-full'}`}>
+                    <div class="prose prose-lg max-w-none">
+                        <Markdown content={aboutPage.description} />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Education Section -->
+        <div class="mb-16">
+            <div class="flex flex-col-reverse md:flex-row gap-8 items-start">
+                <div class={`${pictures[1] ? 'md:w-2/3' : 'w-full'}`}>
+                    <div class="prose prose-lg max-w-none">
+                        <Markdown content={aboutPage.education} />
+                    </div>
+                </div>
+                {pictures[1] && (
+                        <div class="md:w-1/3">
+                            <img
+                                    src={getMediaUrl(pictures[1])}
+                                    alt={pictures[1].alternativeText || "Education"}
+                                    class="rounded-lg shadow-lg w-full object-cover aspect-square"
+                            />
+                        </div>
+                )}
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Research & Publications Section -->
+        <div class="mb-8">
+            <div class="flex flex-col md:flex-row gap-8 items-start">
+                {pictures[2] && (
+                        <div class="md:w-1/3">
+                            <img
+                                    src={getMediaUrl(pictures[2])}
+                                    alt={pictures[2].alternativeText || "Research and Publications"}
+                                    class="rounded-lg shadow-lg w-full object-cover aspect-[4/3]"
+                            />
+                        </div>
+                )}
+                <div class={`${pictures[2] ? 'md:w-2/3' : 'w-full'}`}>
+                    <div class="prose prose-lg max-w-none">
+                        <Markdown content={aboutPage.research_and_publications} />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action Section -->
+        <div class="card bg-base-200 p-4 my-12 text-center">
+            <h3 class="text-2xl font-semibold mb-4">
+                <Icon name="mdi:hand-heart" class="w-6 h-6 inline-block mr-2 text-primary" />
+                {translate(lang, 'services.appointment')}
+            </h3>
+            <p class="mb-6 text-lg">
+                {lang === 'nl'
+                    ? 'Klaar om een afspraak te maken? Neem gerust contact met mij op.'
+                    : lang === 'fr'
+                        ? 'Prêt à prendre rendez-vous? N\'hésitez pas à me contacter.'
+                        : 'Ready to make an appointment? Feel free to contact me.'}
+            </p>
+            <a href={`/${lang}/contact`} class="btn btn-primary">
+                <Icon name="mdi:calendar-plus" class="w-5 h-5 mr-2" />
+                {translate(lang, 'nav.contact')}
+            </a>
+        </div>
+    </main>
+</Layout>

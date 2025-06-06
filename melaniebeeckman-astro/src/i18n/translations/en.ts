@@ -11,7 +11,7 @@ export const en: Translations = {
     nav: {
         home: 'Home',
         services: 'Services',
-        aboutMe: 'About Me',
+        aboutMe: 'About me',
         contact: 'Contact',
     },
     home: {

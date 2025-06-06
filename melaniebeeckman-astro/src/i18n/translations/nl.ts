@@ -9,9 +9,9 @@ export const nl: Translations = {
         goHome: 'Ga naar de startpagina',
     },
     nav: {
-        home: 'Home',
+        home: 'Startpagina',
         services: 'Diensten',
-        aboutMe: 'Over Mij',
+        aboutMe: 'Over mij',
         contact: 'Contact',
     },
     home: {
