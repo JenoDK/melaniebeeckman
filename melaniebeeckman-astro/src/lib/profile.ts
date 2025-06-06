@@ -55,9 +55,8 @@ export async function getProfile(lang: Language): Promise<Profile> {
  * Returns the formatted profile picture URL or default image
  */
 export function getProfilePicture(profile: Profile): any {
-    console.warn('ZAD', import.meta.env.STRAPI_API_URL);
     return profile.profilePicture?.url
-        ? `${import.meta.env.STRAPI_API_URL}${profile.profilePicture.url}`
+        ? `${import.meta.env.STRAPI_PUBLIC_URL}${profile.profilePicture.url}`
         : ProfilePicture;
 }
 
@@ -79,7 +78,6 @@ export async function getProfileData(lang: Language): Promise<{
 }> {
     const profile = await getProfile(lang);
     const profilePicture = getProfilePicture(profile);
-    console.warn('ZADAZDAZ', profilePicture);
     const fullName = getFullName(profile);
 
     return {

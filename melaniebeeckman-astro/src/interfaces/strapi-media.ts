@@ -55,8 +55,6 @@ export function isStrapiMedia(media: any): media is StrapiMedia {
  * @returns The URL to the image or the default profile picture
  */
 export function getMediaUrl(media: StrapiMedia | ImageMetadata | undefined): any {
-    console.warn('ZADAZDAZ', import.meta.env.STRAPI_API_URL);
-
     if (!media) {
         return ProfilePicture;
     }
@@ -68,7 +66,7 @@ export function getMediaUrl(media: StrapiMedia | ImageMetadata | undefined): any
             return media.url;
         }
         // Otherwise prepend the Strapi API URL
-        return `${import.meta.env.STRAPI_API_URL}${media.url}`;
+        return `${import.meta.env.STRAPI_PUBLIC_URL}${media.url}`;
     }
 
     // If it's an ImageMetadata (local image), return as is
