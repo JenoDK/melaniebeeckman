@@ -16,9 +16,8 @@ export type Translations = {
     };
     nav: {
         home: string;
-        research: string;
-        papers: string;
-        cv: string;
+        aboutMe: string;
+        services: string;
         contact: string;
     };
     home: {

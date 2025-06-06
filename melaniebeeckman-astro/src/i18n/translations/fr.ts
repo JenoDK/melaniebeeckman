@@ -10,9 +10,8 @@ export const fr: Translations = {
     },
     nav: {
         home: 'Accueil',
-        research: 'Recherche',
-        papers: 'Papers',
-        cv: 'Curriculum Vitae',
+        services: 'Services',
+        aboutMe: 'À Propos',
         contact: 'Contact',
     },
     home: {

@@ -16,29 +16,32 @@
     }
   },
   "attributes": {
-    "title": {
+    "name": {
       "type": "string",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "required": true
     },
-    "street": {
+    "address": {
       "type": "string",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "required": true
     },
-    "town": {
+    "city": {
       "type": "string",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "required": true
     },
     "postalcode": {
       "type": "string",
@@ -46,15 +49,8 @@
         "i18n": {
           "localized": true
         }
-      }
-    },
-    "number": {
-      "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      },
+      "required": true
     },
     "description": {
       "type": "richtext",
@@ -65,8 +61,10 @@
       }
     },
     "locationId": {
-      "type": "uid",
-      "targetField": "title"
+      "type": "uid"
+    },
+    "mapUrl": {
+      "type": "string"
     }
   }
 }

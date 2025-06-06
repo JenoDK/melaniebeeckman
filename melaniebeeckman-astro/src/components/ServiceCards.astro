@@ -39,27 +39,29 @@ const { services, lang } = Astro.props;
                     <div class="card-body">
                         <h3 class="card-title text-primary">{service.title}</h3>
 
-                        {service.description && (
-                                <div class="mt-2 text-sm">
-                                    <Markdown content={service.description}/>
-                                </div>
-                        )}
+                        <div class="flex-grow">
+                            {service.description && (
+                                    <div class="mt-2 text-sm">
+                                        <Markdown content={service.description}/>
+                                    </div>
+                            )}
 
-                        {service.showPrices && service.prices && service.prices.length > 0 && (
-                                <div class="mt-4">
-                                    <h4 class="font-semibold text-base-content/80 mb-2">{translate(lang, 'services.servicePrices')}</h4>
-                                    <ul class="space-y-2">
-                                        {service.prices.map((price) => (
-                                                <li class="flex justify-between">
-                                                    <span>{price.title}</span>
-                                                    {price.priceInEuros && (
-                                                            <span class="font-medium">€{price.priceInEuros}</span>
-                                                    )}
-                                                </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                        )}
+                            {service.showPrices && service.prices && service.prices.length > 0 && (
+                                    <div class="mt-4">
+                                        <h4 class="font-semibold text-base-content/80 mb-2">{translate(lang, 'services.servicePrices')}</h4>
+                                        <ul class="space-y-2">
+                                            {service.prices.map((price) => (
+                                                    <li class="flex justify-between">
+                                                        <span>{price.title}</span>
+                                                        {price.priceInEuros && (
+                                                                <span class="font-medium">€{price.priceInEuros}</span>
+                                                        )}
+                                                    </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                            )}
+                        </div>
 
                         <div class="card-actions justify-between mt-4">
                             <a

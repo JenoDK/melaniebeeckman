@@ -1,0 +1,111 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { getContactPage } from '@lib/contactpage';
+import Markdown from '@components/Markdown.astro';
+import { Icon } from 'astro-icon/components';
+import { getAsLanguage, getLanguagePaths } from '@i18n/utils';
+
+const lang = getAsLanguage(Astro.params.lang, Astro.currentLocale);
+
+// Fetch contact page data
+const contactPage = await getContactPage(lang);
+
+// Create email mailto link with subject and body
+const emailSubject = "Informatie aanvraag";
+const emailBody = "Hallo,\n\nIk heb een vraag over uw diensten.\n\nMet vriendelijke groet,";
+const mailtoLink = `mailto:${contactPage.email}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+
+// Translations (this would come from your i18n setup)
+const t = {
+    locations: {
+        title: 'Locaties',
+        directions: 'Routebeschrijving',
+    }
+};
+
+export function getStaticPaths() {
+    return getLanguagePaths();
+}
+---
+
+<Layout title={contactPage.title} lang={lang}>
+    <main class="container mx-auto max-w-4xl">
+        <h1 class="text-4xl font-bold text-center mb-8">{contactPage.title}</h1>
+
+        <!-- Contact Introduction -->
+        <div class="prose prose-lg mx-auto mb-12 text-center">
+            <Markdown content={contactPage.contact_intro} />
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="flex flex-col gap-4">
+            <h2 class="text-2xl font-semibold">Contact Informatie</h2>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <!-- Phone -->
+                <div class="flex items-center gap-4">
+                    <div class="bg-primary/10 p-3 rounded-full">
+                        <Icon name="mdi:phone" class="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                        <p class="font-medium">Telefoon</p>
+                        <a href={`tel:${contactPage.phone}`} class="text-primary hover:underline">
+                            {contactPage.phone}
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Email with mailto link -->
+                <div class="flex items-center gap-4">
+                    <div class="bg-primary/10 p-3 rounded-full">
+                        <Icon name="mdi:email" class="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                        <p class="font-medium">E-mail</p>
+                        <a href={mailtoLink} class="text-primary hover:underline">
+                            {contactPage.email}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <a href={mailtoLink} class="btn btn-primary">
+                <Icon name="mdi:email-outline" class="w-5 h-5 mr-2" />
+                Stuur een e-mail
+            </a>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Locations -->
+        {contactPage.locations && contactPage.locations.length > 0 && (
+                <div>
+                    <h2 class="text-2xl font-semibold mb-6 pb-2">{t.locations.title}</h2>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        {contactPage.locations.map(location => (
+                                <div class="border-l-4 border-primary pl-4">
+                                    <h3 class="font-bold text-lg">{location.name}</h3>
+                                    <p class="text-base-content/80">{location.address}</p>
+                                    <p class="text-base-content/80 mb-4">{location.postalCode} {location.city}</p>
+
+                                    {location.mapUrl && (
+                                            <a
+                                                    href={location.mapUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="btn btn-outline btn-sm"
+                                            >
+                                                <Icon name="mdi:map-marker" class="w-4 h-4 mr-1" />
+                                                {t.locations.directions}
+                                            </a>
+                                    )}
+                                </div>
+                        ))}
+                    </div>
+                </div>
+        )}
+
+    </main>
+</Layout>
