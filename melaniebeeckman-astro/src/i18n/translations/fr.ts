@@ -12,6 +12,7 @@ export const fr: Translations = {
         home: 'Accueil',
         services: 'Services',
         aboutMe: 'À Propos',
+        faq: 'Questions fréquemment posées',
         contact: 'Contact',
     },
     home: {

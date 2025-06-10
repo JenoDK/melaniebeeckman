@@ -19,6 +19,7 @@ export type Translations = {
         aboutMe: string;
         services: string;
         contact: string;
+        faq: string;
     };
     home: {
         welcome: string;
@@ -44,5 +45,5 @@ export type Translations = {
             subject: string;
             body: string;
         }
-    }
+    },
 }

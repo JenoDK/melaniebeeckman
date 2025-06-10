@@ -12,6 +12,7 @@ export const en: Translations = {
         home: 'Home',
         services: 'Services',
         aboutMe: 'About me',
+        faq: 'Frequently Asked Questions',
         contact: 'Contact',
     },
     home: {

@@ -22,7 +22,8 @@
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "required": true
     },
     "pictures": {
       "type": "media",
@@ -41,7 +42,8 @@
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "required": true
     },
     "education": {
       "type": "richtext",
@@ -49,7 +51,8 @@
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "required": true
     },
     "research_and_publications": {
       "type": "richtext",
@@ -57,7 +60,8 @@
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "required": true
     }
   }
 }

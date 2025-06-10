@@ -13,6 +13,7 @@ const { lang } = Astro.props;
 const homeURL = getRelativeLocaleUrl(lang, "");
 const aboutUrl = getRelativeLocaleUrl(lang, "about");
 const contactUrl = getRelativeLocaleUrl(lang, "contact");
+const faqUrl = getRelativeLocaleUrl(lang, "faq");
 
 const { profile, profilePicture, fullName } = await getProfileData(lang);
 
@@ -38,6 +39,9 @@ const { profile, profilePicture, fullName } = await getProfileData(lang);
 					</li>
 					<li>
 						<a href={aboutUrl} class='text-lg'>{translate(lang, 'nav.aboutMe')}</a>
+					</li>
+					<li>
+						<a href={faqUrl} class='text-lg'>{translate(lang, 'nav.faq')}</a>
 					</li>
 					<li>
 						<a href={contactUrl} class='text-lg'>{translate(lang, 'nav.contact')}</a>

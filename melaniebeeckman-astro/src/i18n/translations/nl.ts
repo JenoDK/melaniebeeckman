@@ -12,6 +12,7 @@ export const nl: Translations = {
         home: 'Startpagina',
         services: 'Diensten',
         aboutMe: 'Over mij',
+        faq: 'Veelgestelde vragen',
         contact: 'Contact',
     },
     home: {

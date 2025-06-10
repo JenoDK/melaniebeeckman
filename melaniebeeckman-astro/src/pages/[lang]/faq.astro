@@ -1,0 +1,15 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { getAsLanguage, getLanguagePaths } from '@i18n/utils';
+import FaqComponent from '@components/FaqComponent.astro';
+
+const lang = getAsLanguage(Astro.params.lang, Astro.currentLocale);
+
+export function getStaticPaths() {
+    return getLanguagePaths();
+}
+---
+
+<Layout lang={lang}>
+    <FaqComponent lang={lang} />
+</Layout>

@@ -1,0 +1,21 @@
+---
+import { type Language } from '@i18n/utils';
+import { getHomepage } from '@lib/homepage';
+import Faqs from '@components/Faqs.astro';
+
+interface Props {
+    lang: Language;
+}
+
+const { lang } = Astro.props;
+
+const homePage = await getHomepage(lang);
+---
+<div>
+    <!-- Content with relative positioning to appear above the background -->
+    <div>
+        {homePage &&
+            <Faqs faqs={homePage.faqs} lang={lang} />
+        }
+    </div>
+</div>
