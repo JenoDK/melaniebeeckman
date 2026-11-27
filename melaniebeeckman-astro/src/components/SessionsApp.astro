@@ -1,0 +1,344 @@
+---
+/**
+ * Live booking tool. Sessions and places left come from Strapi when the page opens,
+ * so the site never needs a rebuild when Melanie adds a session or someone books.
+ */
+import { t, type Lang } from '@i18n/index';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = t(lang);
+const s = c.sessions;
+const texts = {
+  types: s.types,
+  left1: s.left1,
+  leftN: s.leftN,
+  full: s.full,
+  reserve: s.reserve,
+  selected: s.selected,
+  placeWord: s.placeWord,
+  placesWord: s.placesWord,
+  price: c.booking.price,
+  sending: c.booking.sending,
+  errors: c.booking.errors,
+};
+const clock = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A4E58" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>';
+const pin = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A4E58" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>';
+const euro = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A4E58" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="8" cy="8" r="1.5"></circle></svg>';
+---
+
+<div id="sessions-app" data-lang={lang} data-texts={JSON.stringify(texts)}>
+  <!-- Open: list + booking form -->
+  <div data-open hidden>
+    <section class="wrap stack" style="padding-bottom: 56px; gap: 24px;">
+      <h2 class="h2" style="font-size: 34px;">{s.chooseTitle}</h2>
+      <ul class="sess-list" data-list aria-live="polite"></ul>
+    </section>
+
+    <section id="booking" class="wrap" style="padding-bottom: 110px; scroll-margin-top: 24px;">
+      <p class="body empty" data-hint>{s.pick}</p>
+
+      <div class="card stack e-page" data-form-card hidden style="gap: 28px;">
+        <div class="stack" style="gap: 10px;">
+          <p class="eyebrow">{s.formTitle}</p>
+          <h2 class="h2" style="font-size: clamp(30px, 3.2vw, 40px);" data-sel-title tabindex="-1"></h2>
+          <p class="body" data-sel-line></p>
+        </div>
+        <form class="form" novalidate data-book>
+          <div class="fields">
+            <div><label class="lbl" for="b-name">{c.req.name}</label><input id="b-name" name="name" class="inp" type="text" autocomplete="name" required maxlength="120" /></div>
+            <div><label class="lbl" for="b-email">{c.req.email}</label><input id="b-email" name="email" class="inp" type="email" autocomplete="email" required maxlength="254" /></div>
+            <div><label class="lbl" for="b-phone">{c.req.phone}</label><input id="b-phone" name="phone" class="inp" type="tel" autocomplete="tel" maxlength="40" /></div>
+            <div><label class="lbl" for="b-places">{s.places}</label><select id="b-places" name="places" class="inp"></select></div>
+          </div>
+          <div><label class="lbl" for="b-note">{s.note}</label><textarea id="b-note" name="note" class="inp" maxlength="1000"></textarea></div>
+          <div class="hp" aria-hidden="true"><label for="b-website">Website</label><input id="b-website" name="website" type="text" tabindex="-1" autocomplete="off" /></div>
+          <div class="captcha"></div>
+          <p class="form-error" role="alert" hidden></p>
+          <div class="row" style="gap: 16px 24px;">
+            <button class="btn" type="submit">{s.confirm}</button>
+            <button type="button" class="tlink" data-clear>{s.cancel}</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card done e-page" role="status" data-done hidden>
+        <div class="e-breath mini-blob" aria-hidden="true"><div class="e-morph fill" style="background: var(--blob-2);"></div></div>
+        <h2 class="h2" tabindex="-1">{s.doneTitle}</h2>
+        <p class="body body-lg"><strong style="font-weight: 500; color: var(--wine);" data-done-summary></strong></p>
+        <p class="body body-lg" style="max-width: 28em;">{s.doneText}</p>
+        <button type="button" class="btn btn-line" data-clear>{s.again}</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Loading -->
+  <section class="wrap" style="padding-bottom: 110px;" data-loading>
+    <p class="sr-only" role="status">{c.booking.loading}</p>
+    <ul class="sess-list" aria-hidden="true">
+      <li class="sess-skeleton"></li><li class="sess-skeleton" style="animation-delay: .3s;"></li><li class="sess-skeleton" style="animation-delay: .6s;"></li>
+    </ul>
+  </section>
+
+  <!-- Could not load -->
+  <section class="wrap" style="padding-bottom: 110px;" data-failed hidden>
+    <p class="body empty" role="alert">{c.booking.errors.load}</p>
+  </section>
+
+  <!-- Nothing planned: waitlist -->
+  <section class="wrap" style="padding-bottom: 110px;" data-closed hidden>
+    <div class="card stack center e-page" style="gap: 18px; padding: 72px clamp(24px, 6vw, 80px);">
+      <h2 class="h2" style="font-size: clamp(32px, 3.4vw, 44px);">{s.closedTitle}</h2>
+      <p class="body body-lg" style="max-width: 30em;">{s.closedText}</p>
+      <form class="row" novalidate data-waitlist style="justify-content: center; align-items: flex-end; gap: 12px; width: 100%; max-width: 520px; margin-top: 8px;">
+        <div style="flex: 1 1 260px; text-align: left;">
+          <label class="lbl" for="n-email">{c.req.email}</label>
+          <input id="n-email" name="email" class="inp" type="email" autocomplete="email" required maxlength="254" />
+        </div>
+        <div class="hp" aria-hidden="true"><label for="n-website">Website</label><input id="n-website" name="website" type="text" tabindex="-1" autocomplete="off" /></div>
+        <button class="btn" type="submit">{s.notifyBtn}</button>
+        <div class="captcha" style="flex-basis: 100%;"></div>
+        <p class="form-error" role="alert" hidden style="flex-basis: 100%;"></p>
+      </form>
+      <p role="status" class="body body-lg" style="color: var(--wine);" data-waitlist-done hidden>{s.notifyDone}</p>
+    </div>
+  </section>
+
+  <template data-card>
+    <li class="sess">
+      <div class="sess-date">
+        <span class="sess-day" data-day></span>
+        <span class="sess-month"><span data-month></span><span data-weekday></span></span>
+      </div>
+      <h3 class="sess-title" data-title></h3>
+      <div class="sess-meta">
+        <span><Fragment set:html={clock} /><span data-time></span></span>
+        <span><Fragment set:html={pin} /><span data-place></span></span>
+        <span data-price-row><Fragment set:html={euro} /><span data-price></span></span>
+      </div>
+      <div class="sess-foot">
+        <span class="small" data-left></span>
+        <button type="button" class="btn btn-sm btn-line" data-pick></button>
+      </div>
+    </li>
+  </template>
+</div>
+
+<script>
+  import { api, errorText, formValues, protect, setBusy } from '../scripts/api';
+  import { fmt, loadSessions, type Session, type SessionList } from '../scripts/sessions';
+
+  function init() {
+    const root = document.getElementById('sessions-app');
+    if (!root || root.dataset.ready) return;
+    root.dataset.ready = '1';
+
+    const lang = root.dataset.lang!;
+    const tx = JSON.parse(root.dataset.texts!);
+    const f = fmt(lang);
+    const $ = <T extends HTMLElement = HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+
+    const openEl = $('[data-open]');
+    const loadingEl = $('[data-loading]');
+    const failedEl = $('[data-failed]');
+    const closedEl = $('[data-closed]');
+    const list = $('[data-list]');
+    const tpl = $<HTMLTemplateElement>('template[data-card]');
+    const hint = $('[data-hint]');
+    const formCard = $('[data-form-card]');
+    const done = $('[data-done]');
+    const form = $<HTMLFormElement>('form[data-book]');
+    const formError = form.querySelector<HTMLElement>('.form-error')!;
+    const placesSelect = $<HTMLSelectElement>('#b-places');
+    const submit = form.querySelector<HTMLButtonElement>('button[type=submit]');
+    const guard = protect(form, lang);
+
+    let data: SessionList | null = null;
+    let selected: Session | null = null;
+    let rendered = false;
+
+    const leftLabel = (n: number) => (n <= 0 ? tx.full : n === 1 ? tx.left1 : tx.leftN.replace('{n}', String(n)));
+    const placeText = (s: Session) => (s.location ? `${s.location.city}, ${s.location.name}` : '');
+    const summary = (s: Session) => [f.full(s.startsAt), f.time(s), placeText(s)].filter(Boolean).join(' · ');
+
+    function show(state: 'loading' | 'open' | 'closed' | 'failed') {
+      loadingEl.hidden = state !== 'loading';
+      openEl.hidden = state !== 'open';
+      closedEl.hidden = state !== 'closed';
+      failedEl.hidden = state !== 'failed';
+    }
+
+    function render() {
+      if (!data) return;
+      const sessions = data.sessions;
+      if (!data.registrationsOpen || sessions.length === 0) {
+        show('closed');
+        return;
+      }
+      show('open');
+      list.replaceChildren(
+        ...sessions.map((s, i) => {
+          const li = (tpl.content.firstElementChild as HTMLElement).cloneNode(true) as HTMLElement;
+          const set = (sel: string, text: string) => (li.querySelector(sel)!.textContent = text);
+          set('[data-day]', f.day(s.startsAt));
+          set('[data-month]', f.month(s.startsAt));
+          set('[data-weekday]', f.weekday(s.startsAt));
+          set('[data-title]', tx.types[s.type] ?? s.type);
+          set('[data-time]', f.time(s));
+          set('[data-place]', placeText(s));
+          const price = f.price(s.priceInEuros);
+          if (price) set('[data-price]', `${price} ${tx.price}`);
+          else li.querySelector<HTMLElement>('[data-price-row]')!.hidden = true;
+          set('[data-left]', leftLabel(s.placesLeft));
+          if (rendered) li.style.animation = 'none';
+          else li.style.animationDelay = `${i * 0.08}s`;
+
+          const btn = li.querySelector<HTMLButtonElement>('[data-pick]')!;
+          const isSel = selected?.documentId === s.documentId;
+          if (!s.bookable) {
+            li.classList.add('is-full');
+            btn.remove();
+          } else {
+            li.classList.toggle('is-on', isSel);
+            btn.textContent = isSel ? tx.selected : tx.reserve;
+            btn.classList.toggle('btn-line', !isSel);
+            btn.setAttribute('aria-pressed', String(isSel));
+            btn.setAttribute('aria-label', `${tx.reserve}: ${tx.types[s.type] ?? s.type}, ${summary(s)}`);
+            btn.addEventListener('click', () => pick(s));
+          }
+          return li;
+        })
+      );
+      rendered = true;
+      // Keep the selection in sync with fresh availability.
+      if (selected) {
+        const fresh = sessions.find((s) => s.documentId === selected!.documentId);
+        if (!fresh || !fresh.bookable) clearSelection();
+        else {
+          selected = fresh;
+          fillPlaces(fresh);
+        }
+      }
+    }
+
+    function fillPlaces(s: Session) {
+      const max = Math.max(1, Math.min(data?.maxPlacesPerBooking ?? 3, s.placesLeft));
+      const current = Number(placesSelect.value) || 1;
+      placesSelect.replaceChildren(...Array.from({ length: max }, (_, i) => new Option(String(i + 1), String(i + 1))));
+      placesSelect.value = String(Math.min(current, max));
+    }
+
+    function pick(s: Session) {
+      selected = s;
+      formError.hidden = true;
+      done.hidden = true;
+      hint.hidden = true;
+      formCard.hidden = false;
+      $('[data-sel-title]').textContent = tx.types[s.type] ?? s.type;
+      $('[data-sel-line]').textContent = summary(s);
+      fillPlaces(s);
+      render();
+      formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => form.querySelector<HTMLInputElement>('#b-name')?.focus({ preventScroll: true }), 700);
+    }
+
+    function clearSelection() {
+      selected = null;
+      formCard.hidden = true;
+      done.hidden = true;
+      hint.hidden = false;
+      formError.hidden = true;
+      render();
+    }
+
+    async function refresh() {
+      try {
+        data = await loadSessions();
+        render();
+      } catch {
+        if (!data) show('failed');
+      }
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!selected) return;
+      formError.hidden = true;
+      if (!form.checkValidity()) {
+        const bad = form.querySelector<HTMLInputElement>(':invalid');
+        formError.textContent = bad?.type === 'email' && bad.value ? tx.errors.email : tx.errors.missing;
+        formError.hidden = false;
+        bad?.focus();
+        return;
+      }
+      const values = formValues(form);
+      const session = selected;
+      setBusy(submit, true, tx.sending);
+      try {
+        const res = await api<{ places: number; placesLeft: number }>(`/sessions/${session.documentId}/register`, {
+          method: 'POST',
+          body: { ...values, places: Number(values.places || 1), language: lang, turnstileToken: guard.token() },
+        });
+        const word = res.places === 1 ? tx.placeWord : tx.placesWord;
+        $('[data-done-summary]').textContent = `${tx.types[session.type] ?? session.type} · ${summary(session)} · ${res.places} ${word}`;
+        selected = null;
+        form.reset();
+        formCard.hidden = true;
+        done.hidden = false;
+        done.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        done.querySelector<HTMLElement>('h2')?.focus({ preventScroll: true });
+        guard.reset();
+        refresh();
+      } catch (err) {
+        formError.textContent = errorText(err, tx.errors);
+        formError.hidden = false;
+        guard.reset();
+        // Availability changed under us: show the new numbers.
+        if ((err as any)?.status === 409) refresh();
+      } finally {
+        setBusy(submit, false);
+      }
+    });
+
+    root.querySelectorAll('[data-clear]').forEach((b) =>
+      b.addEventListener('click', () => {
+        clearSelection();
+        list.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      })
+    );
+
+    // Waitlist when nothing is planned.
+    const wl = $<HTMLFormElement>('form[data-waitlist]');
+    const wlError = wl.querySelector<HTMLElement>('.form-error')!;
+    const wlGuard = protect(wl, lang);
+    wl.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      wlError.hidden = true;
+      if (!wl.checkValidity()) {
+        wlError.textContent = tx.errors.email;
+        wlError.hidden = false;
+        return;
+      }
+      const btn = wl.querySelector<HTMLButtonElement>('button[type=submit]');
+      setBusy(btn, true, tx.sending);
+      try {
+        await api('/waitlist', { method: 'POST', body: { ...formValues(wl), language: lang, turnstileToken: wlGuard.token() } });
+        wl.hidden = true;
+        $('[data-waitlist-done]').hidden = false;
+      } catch (err) {
+        wlError.textContent = errorText(err, tx.errors);
+        wlError.hidden = false;
+        wlGuard.reset();
+      } finally {
+        setBusy(btn, false);
+      }
+    });
+
+    show('loading');
+    refresh();
+  }
+
+  document.addEventListener('astro:page-load', init);
+</script>

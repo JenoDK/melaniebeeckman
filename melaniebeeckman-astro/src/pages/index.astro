@@ -1,12 +1,24 @@
 ---
-import Layout from '@layouts/Layout.astro';
-import { getAsLanguage } from '@i18n/utils';
-import IndexComponent from '@components/IndexComponent.astro';
-
-const lang = getAsLanguage(Astro.params.lang, Astro.currentLocale);
-
+/* The root sends visitors to their language: French or English browsers get /fr/ or /en/, everyone else /nl/. */
 ---
 
-<Layout lang={lang}>
-    <IndexComponent  lang={lang} />
-</Layout>
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <title>Melanie Beeckman</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href="https://melaniebeeckman.be/nl/" />
+    <meta http-equiv="refresh" content="0; url=/nl/" />
+    <script is:inline>
+      (function () {
+        var l = (navigator.languages && navigator.languages[0]) || navigator.language || 'nl';
+        l = l.slice(0, 2).toLowerCase();
+        location.replace('/' + (l === 'fr' || l === 'en' ? l : 'nl') + '/');
+      })();
+    </script>
+  </head>
+  <body style="background: #F7F0E8;">
+    <a href="/nl/">Melanie Beeckman</a>
+  </body>
+</html>

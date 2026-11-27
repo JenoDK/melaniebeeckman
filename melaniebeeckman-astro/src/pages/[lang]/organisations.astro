@@ -1,0 +1,36 @@
+---
+import Layout from '@layouts/Layout.astro';
+import InquiryForm from '@components/InquiryForm.astro';
+import { t, langPaths, type Lang } from '@i18n/index';
+
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+const c = t(lang);
+const s = c.services;
+---
+
+<Layout lang={lang} page="orgs">
+  <section class="wrap stack" style="padding-top: 64px; padding-bottom: 64px; gap: 22px; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <p class="eyebrow e-rise">{c.orgs.eyebrow}</p>
+    <h1 class="h1 e-rise e-d1" style="font-size: clamp(40px, 5.2vw, 70px);">{c.orgs.title}</h1>
+    <p class="lead e-rise e-d2">{c.orgs.intro}</p>
+  </section>
+
+  <section class="wrap grid reveal" style="--min: 300px; --gap: 24px; padding-bottom: 72px;">
+    <article class="card stack" style="gap: 14px;">
+      <h2 class="h3">{s.groupA}</h2>
+      <p class="body">{s.groupAText}</p>
+      <div class="chips">{c.groupTopics.map((g) => <span class="chip">{g}</span>)}</div>
+    </article>
+    <article class="card card-sand stack" style="gap: 14px;">
+      <h2 class="h3">{s.groupB}</h2>
+      <p class="body">{s.groupBText}</p>
+      <div class="chips">{c.talkTopics.map((k) => <span class="chip">{k}</span>)}</div>
+    </article>
+  </section>
+
+  <section id="aanvraag" class="narrow stack" style="padding-bottom: 140px; gap: 32px; scroll-margin-top: 24px;">
+    <h2 class="h2">{c.req.formTitle}</h2>
+    <InquiryForm lang={lang} variant="org" />
+  </section>
+</Layout>

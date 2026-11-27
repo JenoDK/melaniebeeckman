@@ -1,0 +1,72 @@
+---
+import { t, langs, languages, href, type Lang, type PageKey } from '@i18n/index';
+import { site } from '@lib/site';
+
+interface Props {
+  lang: Lang;
+  page: PageKey | 'notFound';
+}
+const { lang, page } = Astro.props;
+const c = t(lang);
+const navKeys = ['about', 'services', 'sessions', 'orgs', 'faq', 'contact'] as const;
+const langHref = (l: Lang) => (page === 'notFound' ? `/${l}/` : href(l, page));
+---
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href={href(lang, 'home')}>Melanie Beeckman</a>
+    <div class="header-right">
+      <div class="menu-panel" id="menu-panel">
+        <nav class="main-nav" aria-label={c.ui.menu}>
+          {
+            navKeys.map((key) => (
+              <a class="nav" href={href(lang, key)} aria-current={page === key ? 'page' : undefined}>
+                {c.nav[key]}
+              </a>
+            ))
+          }
+        </nav>
+        <div class="langs langs-panel" role="group" aria-label={c.ui.language}>
+          {
+            langs.map((l) => (
+              <a class="lang" href={langHref(l)} hreflang={l} lang={l} aria-current={l === lang ? 'true' : undefined} data-astro-reload>
+                {languages[l]}
+              </a>
+            ))
+          }
+        </div>
+        <a class="btn btn-sm" href={site.rosa} target="_blank" rel="noopener">{c.home.cta1}</a>
+      </div>
+      <div class="langs langs-bar" role="group" aria-label={c.ui.language}>
+        {
+          langs.map((l) => (
+            <a class="lang" href={langHref(l)} hreflang={l} lang={l} aria-current={l === lang ? 'true' : undefined} data-astro-reload>
+              {l.toUpperCase()}
+            </a>
+          ))
+        }
+      </div>
+      <a class="btn btn-line btn-sm" href={site.rosa} target="_blank" rel="noopener">{c.nav.book}<span class="sr-only"> {c.ui.newTab}</span></a>
+      <button type="button" class="btn btn-line btn-sm menu-btn" aria-expanded="false" aria-controls="menu-panel" data-open={c.ui.openMenu} data-close={c.ui.closeMenu}>
+        {c.ui.openMenu}
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  function initMenu() {
+    const header = document.querySelector<HTMLElement>('.site-header');
+    const btn = header?.querySelector<HTMLButtonElement>('.menu-btn');
+    if (!header || !btn) return;
+    const set = (open: boolean) => {
+      header.classList.toggle('menu-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      btn.textContent = open ? btn.dataset.close! : btn.dataset.open!;
+    };
+    btn.addEventListener('click', () => set(!header.classList.contains('menu-open')));
+    header.addEventListener('keydown', (e) => e.key === 'Escape' && set(false));
+    header.querySelectorAll('.main-nav a').forEach((a) => a.addEventListener('click', () => set(false)));
+  }
+  document.addEventListener('astro:page-load', initMenu);
+</script>

@@ -1,13 +1,51 @@
 ---
+import { t, href, type Lang } from '@i18n/index';
+import { site, locations } from '@lib/site';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = t(lang);
+const keys = ['home', 'about', 'services', 'sessions', 'orgs', 'faq', 'contact'] as const;
+const year = new Date().getFullYear();
 ---
 
-<footer class='footer footer-center bg-base-100 text-base-content px-4 pt-8'>
-	<aside>
-		<p>
-			Copyright © {new Date().getFullYear()} - All right reserved by Melanie Beeckman
-		</p>
-		<p>
-			Built by <a href='https://jenodk.com' class="font-bold" target='_blank'>JenoDK</a>
-		</p>
-	</aside>
+<footer class="site-footer">
+  <div class="wrap stack" style="padding-top: 110px; padding-bottom: 52px; gap: 64px;">
+    <div class="row" style="justify-content: space-between; align-items: flex-end; gap: 32px;">
+      <h2 style="margin: 0; font-family: var(--serif); font-weight: 300; font-size: clamp(40px, 5vw, 64px); line-height: 1.02; max-width: 9.5em;">
+        {c.footer.title}
+      </h2>
+      <a class="btn btn-sand" href={site.rosa} target="_blank" rel="noopener">{c.footer.cta}</a>
+    </div>
+    <div class="grid" style="--min: 190px; --gap: 36px; font-size: 15px; line-height: 1.8; color: #EAD9CF;">
+      {
+        locations.map((loc) => (
+          <div>
+            <div class="foot-label">{loc.city[lang]}</div>
+            {loc.name}
+            <br />
+            {loc.street}
+            <br />
+            {loc.postal} {loc.city[lang]}
+          </div>
+        ))
+      }
+      <div>
+        <div class="foot-label">{c.footer.contact}</div>
+        <a href={`tel:${site.phone}`}>{site.phoneLabel}</a>
+        <br />
+        <a href={`mailto:${site.email}`} style="overflow-wrap: anywhere;">{site.email}</a>
+      </div>
+      <nav aria-label={c.ui.footerMenu} class="stack" style="gap: 2px;">
+        <div class="foot-label" style="margin-bottom: 6px;">{c.ui.pages}</div>
+        {keys.map((k) => <a href={href(lang, k)}>{c.nav[k]}</a>)}
+      </nav>
+    </div>
+    <div class="row" style="justify-content: space-between; gap: 16px; padding-top: 28px; border-top: 1px solid rgba(247,240,232,.22); font-size: 13px; color: #D9BFAE;">
+      <span>{c.footer.crisis}</span>
+      <span>© {year} Melanie Beeckman · {c.about.riziv} {site.riziv}</span>
+    </div>
+  </div>
 </footer>

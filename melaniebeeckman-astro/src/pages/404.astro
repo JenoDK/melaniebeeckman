@@ -1,7 +1,16 @@
 ---
-import { defaultLang } from '@i18n/languages';
+import Layout from '@layouts/Layout.astro';
+import BreathingBlob from '@components/BreathingBlob.astro';
+import { t, href } from '@i18n/index';
 
-const preferredLang = Astro.currentLocale ?? defaultLang;
-
-return Astro.rewrite(`/${preferredLang}/404`);
+const c = t('nl');
 ---
+
+<Layout lang="nl" page="notFound">
+  <section class="wrap stack center" style="padding-top: 48px; padding-bottom: 140px; gap: 28px;">
+    <BreathingBlob size="min(220px, 56vw)" halo={false} />
+    <h1 class="h2">{c.notFound.title}</h1>
+    <p class="lead">{c.notFound.text}</p>
+    <a class="btn" href={href('nl', 'home')}>{c.notFound.cta}</a>
+  </section>
+</Layout>

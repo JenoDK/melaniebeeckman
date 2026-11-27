@@ -1,88 +1,84 @@
 ---
-import "@styles/global.css";
-import { translate, type Language } from '@i18n/utils';
-import BetterIcon from '@components/BetterIcon.astro';
-import Navbar from '@components/Navbar.astro';
+import '@fontsource/cormorant-garamond/300.css';
+import '@fontsource/cormorant-garamond/300-italic.css';
+import '@fontsource/cormorant-garamond/400.css';
+import '@fontsource/cormorant-garamond/400-italic.css';
+import '@fontsource/cormorant-garamond/500.css';
+import '@fontsource/jost/300.css';
+import '@fontsource/jost/400.css';
+import '@fontsource/jost/500.css';
+import '@styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
-import LanguagePicker from '@components/LanguagePicker.astro';
+import { t, langs, pages, type Lang, type PageKey } from '@i18n/index';
+import { site } from '@lib/site';
 
 interface Props {
-	title?: string;
-	description?: string;
-	lang: Language;
+  lang: Lang;
+  page: PageKey | 'notFound';
 }
 
-const {
-	title = 'default_title',
-	description = 'default_description',
-	lang
-} = Astro.props
-
-const translated_title = translate(lang, title);
-const translated_description = translate(lang, description);
-
+const { lang, page } = Astro.props;
+const c = t(lang);
+const meta = c.meta[page];
+const title = page === 'home' ? meta.title : `${meta.title} | ${c.meta.siteName}`;
+const slug = page === 'notFound' ? null : pages[page];
+const urlFor = (l: Lang) => (slug === null ? null : new URL(`/${l}/${slug ? slug + '/' : ''}`, site.url).href);
 ---
+
 <!doctype html>
 <html lang={lang}>
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{translated_title}</title>
-		<meta name='title' content={title} />
-		<meta name='description' content={translated_description} />
-	</head>
-	<body>
-		<div class={`bg-base-100 drawer lg:drawer-open`}>
-			<input id='my-drawer' type='checkbox' class='drawer-toggle' />
-			<!-- Drawer content -->
-			<div class='drawer-content bg-base-100'>
-				<div class='bg-base-100 z-50 text-base-content shadow-sm'>
-					<nav class='navbar'>
-						<div class='navbar-start'>
-							<label for='my-drawer' class='btn btn-square btn-ghost lg:hidden'>
-								<BetterIcon>
-									<svg
-										xmlns='http://www.w3.org/2000/svg'
-										fill='none'
-										viewBox='0 0 24 24'
-										stroke-width='1.5'
-										class='size-6 stroke-current'
-									>
-										<path
-											stroke-linecap='round'
-											stroke-linejoin='round'
-											d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5'></path>
-									</svg>
-								</BetterIcon>
-							</label>
-						</div>
-						<div class="navbar-end">
-							<LanguagePicker lang={lang}></LanguagePicker>
-						</div>
-					</nav>
-				</div>
-				<main class='p-8 pt-10 lg:pt-16 lg:max-w-5xl max-w-full mx-auto min-h-screen flex flex-col justify-between'>
-					<!-- Page content -->
-					<slot />
-					<Footer />
-				</main>
-			</div>
-			<!-- Drawer side -->
-			<div class='drawer-side z-40'>
-				<label for='my-drawer' aria-label='close sidebar' class='drawer-overlay'></label>
-				<Navbar lang={lang} />
-			</div>
-		</div>
-	</body>
-</html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={meta.description} />
+    <meta name="theme-color" content="#F7F0E8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {slug !== null && <link rel="canonical" href={urlFor(lang)} />}
+    {slug !== null && langs.map((l) => <link rel="alternate" hreflang={l} href={urlFor(l)} />)}
+    {slug !== null && <link rel="alternate" hreflang="x-default" href={urlFor('nl')} />}
+    {page === 'notFound' && <meta name="robots" content="noindex" />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={meta.description} />
+    <meta property="og:type" content="website" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      document.addEventListener('astro:after-swap', () => document.documentElement.classList.add('js'));
+    </script>
+    <ClientRouter fallback="swap" />
+  </head>
+  <body>
+    <a class="skip" href="#main">{c.ui.skip}</a>
+    <Header lang={lang} page={page} />
+    <main id="main" class="e-page" transition:animate="fade">
+      <slot />
+    </main>
+    <Footer lang={lang} />
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+    <script>
+      // Fade sections in once while scrolling.
+      function reveal() {
+        const items = document.querySelectorAll<HTMLElement>('.reveal:not(.is-in)');
+        if (!('IntersectionObserver' in window)) {
+          items.forEach((el) => el.classList.add('is-in'));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-in');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+        );
+        items.forEach((el) => io.observe(el));
+      }
+      document.addEventListener('astro:page-load', reveal);
+    </script>
+  </body>
+</html>

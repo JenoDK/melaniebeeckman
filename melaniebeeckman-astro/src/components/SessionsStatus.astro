@@ -1,0 +1,43 @@
+---
+/** "Inschrijvingen open · januari en februari 2027". Only shown when there are bookable sessions. */
+import { t, type Lang } from '@i18n/index';
+
+interface Props {
+  lang: Lang;
+  pill?: boolean;
+}
+const { lang, pill = false } = Astro.props;
+const c = t(lang);
+---
+
+<p
+  class={pill ? 'status-pill' : ''}
+  data-sessions-status
+  data-lang={lang}
+  data-label={c.sessions.openLabel}
+  style={pill ? '' : 'margin: 0; display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--wine);'}
+  hidden
+>
+  <span class="e-dot status-dot" aria-hidden="true"></span><span data-text></span>
+</p>
+
+<script>
+  import { loadSessions, periodLabel } from '../scripts/sessions';
+
+  async function init() {
+    const els = document.querySelectorAll<HTMLElement>('[data-sessions-status]');
+    if (els.length === 0) return;
+    try {
+      const data = await loadSessions();
+      const open = data.sessions.filter((s) => s.bookable);
+      if (!data.registrationsOpen || open.length === 0) return;
+      els.forEach((el) => {
+        el.querySelector('[data-text]')!.textContent = `${el.dataset.label} · ${periodLabel(open, el.dataset.lang!)}`;
+        el.hidden = false;
+      });
+    } catch {
+      // Not important enough to show an error here.
+    }
+  }
+  document.addEventListener('astro:page-load', init);
+</script>
