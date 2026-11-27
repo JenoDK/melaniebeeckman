@@ -1,0 +1,189 @@
+---
+/**
+ * Request form for organisations (group session or talk) or a plain contact message.
+ * Posts to Strapi: POST /api/booking/inquiries. Melanie gets an email for each one.
+ */
+import { t, type Lang } from '@i18n/index';
+
+interface Props {
+  lang: Lang;
+  variant: 'org' | 'contact';
+}
+const { lang, variant } = Astro.props;
+const c = t(lang);
+const r = c.req;
+const f = c.contactForm;
+const id = variant === 'org' ? 'r' : 'c';
+const texts = { errors: c.booking.errors, sending: c.booking.sending };
+const topics = { group_session: c.groupTopics, talk: c.talkTopics };
+---
+
+<div class="inquiry" data-inquiry={variant} data-lang={lang} data-texts={JSON.stringify(texts)} data-topics={JSON.stringify(topics)}>
+  <form class="form" novalidate style="gap: 28px;">
+    {
+      variant === 'org' && (
+        <fieldset style="border: 0; margin: 0; padding: 0;">
+          <legend class="lbl" style="margin-bottom: 14px;">{r.typeLabel}</legend>
+          <div class="grid" style="--min: 260px; --gap: 14px;">
+            <label class="opt">
+              <input type="radio" name="kind" value="group_session" checked />
+              <span class="stack" style="gap: 4px;">
+                <span style="font-size: 17px; font-weight: 400; color: var(--ink);">{r.typeGroup}</span>
+                <span class="small">{r.typeGroupSub}</span>
+              </span>
+            </label>
+            <label class="opt">
+              <input type="radio" name="kind" value="talk" />
+              <span class="stack" style="gap: 4px;">
+                <span style="font-size: 17px; font-weight: 400; color: var(--ink);">{r.typeTalk}</span>
+                <span class="small">{r.typeTalkSub}</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+      )
+    }
+    {variant === 'contact' && <input type="hidden" name="kind" value="contact" />}
+
+    {
+      variant === 'org' && (
+        <div>
+          <label class="lbl" for={`${id}-topic`}>{r.topic}</label>
+          <select id={`${id}-topic`} name="topic" class="inp">
+            {c.groupTopics.map((tp) => <option>{tp}</option>)}
+          </select>
+        </div>
+      )
+    }
+
+    <div class="fields" style="gap: 22px;">
+      {
+        variant === 'org' && (
+          <div>
+            <label class="lbl" for={`${id}-org`}>{r.org}</label>
+            <input id={`${id}-org`} name="organisation" class="inp" type="text" autocomplete="organization" maxlength="160" />
+          </div>
+        )
+      }
+      <div>
+        <label class="lbl" for={`${id}-name`}>{variant === 'org' ? r.name : f.name}</label>
+        <input id={`${id}-name`} name="name" class="inp" type="text" autocomplete="name" required maxlength="120" />
+      </div>
+      <div>
+        <label class="lbl" for={`${id}-email`}>{variant === 'org' ? r.email : f.email}</label>
+        <input id={`${id}-email`} name="email" class="inp" type="email" autocomplete="email" required maxlength="254" />
+      </div>
+      <div>
+        <label class="lbl" for={`${id}-phone`}>{variant === 'org' ? r.phone : f.phone}</label>
+        <input id={`${id}-phone`} name="phone" class="inp" type="tel" autocomplete="tel" maxlength="40" />
+      </div>
+      {
+        variant === 'org' && (
+          <>
+            <div>
+              <label class="lbl" for={`${id}-date`}>{r.date}</label>
+              <input id={`${id}-date`} name="preferredDate" class="inp" type="text" maxlength="120" />
+            </div>
+            <div>
+              <label class="lbl" for={`${id}-people`}>{r.people}</label>
+              <input id={`${id}-people`} name="participants" class="inp" type="number" min="1" max="10000" inputmode="numeric" />
+            </div>
+          </>
+        )
+      }
+    </div>
+
+    <div>
+      <label class="lbl" for={`${id}-msg`}>{variant === 'org' ? r.msg : f.msg}</label>
+      <textarea id={`${id}-msg`} name="message" class="inp" maxlength="3000" required={variant === 'contact'}></textarea>
+      {variant === 'contact' && <p class="small" style="margin-top: 10px;">{f.privacy}</p>}
+    </div>
+
+    <div class="hp" aria-hidden="true">
+      <label for={`${id}-website`}>Website</label>
+      <input id={`${id}-website`} name="website" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+    <div class="captcha"></div>
+    <p class="form-error" role="alert" hidden></p>
+    <button class="btn" type="submit" style="align-self: flex-start;">{variant === 'org' ? r.submit : f.submit}</button>
+  </form>
+
+  <div class="card done e-page" role="status" hidden>
+    <div class="e-breath mini-blob" aria-hidden="true"><div class="e-morph fill" style="background: var(--blob-2);"></div></div>
+    <h2 class="h2">{variant === 'org' ? r.sentTitle : f.sentTitle}</h2>
+    <p class="body body-lg" style="max-width: 28em;">{variant === 'org' ? r.sentText : f.sentText}</p>
+    <button type="button" class="btn btn-line" data-again>{variant === 'org' ? r.again : f.again}</button>
+  </div>
+</div>
+
+<script>
+  import { api, errorText, formValues, protect, setBusy } from '../scripts/api';
+
+  function init() {
+    document.querySelectorAll<HTMLElement>('[data-inquiry]').forEach((root) => {
+      if (root.dataset.ready) return;
+      root.dataset.ready = '1';
+      const form = root.querySelector('form')!;
+      const done = root.querySelector<HTMLElement>('.done')!;
+      const error = root.querySelector<HTMLElement>('.form-error')!;
+      const submit = form.querySelector<HTMLButtonElement>('button[type=submit]');
+      const texts = JSON.parse(root.dataset.texts!);
+      const lang = root.dataset.lang!;
+      const guard = protect(form, lang);
+
+      // Organisation form: topic list follows the chosen type. ?type=talk preselects talks.
+      const topics = root.dataset.topics ? JSON.parse(root.dataset.topics) : null;
+      const select = form.querySelector<HTMLSelectElement>('select[name=topic]');
+      const fillTopics = (kind: string) => {
+        if (!select || !topics?.[kind]) return;
+        select.replaceChildren(...topics[kind].map((label: string) => new Option(label, label)));
+      };
+      form.querySelectorAll<HTMLInputElement>('input[name=kind][type=radio]').forEach((radio) => {
+        radio.addEventListener('change', () => radio.checked && fillTopics(radio.value));
+      });
+      const wanted = new URLSearchParams(location.search).get('type');
+      if (wanted === 'talk' || wanted === 'group') {
+        const kind = wanted === 'talk' ? 'talk' : 'group_session';
+        const radio = form.querySelector<HTMLInputElement>(`input[name=kind][value=${kind}]`);
+        if (radio) {
+          radio.checked = true;
+          fillTopics(kind);
+        }
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        error.hidden = true;
+        if (!form.checkValidity()) {
+          const firstBad = form.querySelector<HTMLInputElement>(':invalid');
+          error.textContent = firstBad?.type === 'email' && firstBad.value ? texts.errors.email : texts.errors.missing;
+          error.hidden = false;
+          firstBad?.focus();
+          return;
+        }
+        setBusy(submit, true, texts.sending);
+        try {
+          await api('/inquiries', { method: 'POST', body: { ...formValues(form), language: lang, turnstileToken: guard.token() } });
+          form.hidden = true;
+          done.hidden = false;
+          done.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } catch (err) {
+          error.textContent = errorText(err, texts.errors);
+          error.hidden = false;
+          guard.reset();
+        } finally {
+          setBusy(submit, false);
+        }
+      });
+
+      done.querySelector('[data-again]')!.addEventListener('click', () => {
+        form.reset();
+        fillTopics('group_session');
+        done.hidden = true;
+        form.hidden = false;
+        guard.reset();
+      });
+    });
+  }
+  document.addEventListener('astro:page-load', init);
+</script>

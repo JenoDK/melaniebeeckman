@@ -1,19 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
-    <path
-            d="M88 64
-       a24 24 0 1 0 -24 24
-       a36 36 0 1 1 36 -36
-       a48 48 0 1 0 -48 48
-       a60 60 0 1 1 60 -60"
-            stroke="#2c3e50"
-            stroke-width="3"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-    />
-    <style>
-        @media (prefers-color-scheme: dark) {
-            path { stroke: #ecf0f1; }
-        }
-    </style>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <path fill="#F3D9D7" d="M36.5 3.2c9.6 1.2 17.9 7.6 21.8 16.4 3.6 8.2 2.4 17.1-2.6 24.6-5.4 8.2-13.7 15.6-24.4 16.4C20.4 61.4 10 55.8 5.4 46.6 1 37.9 2.6 27.6 7.6 19.6 13.4 10.2 25.2 1.8 36.5 3.2z"/>
+  <path fill="#B8707C" d="M34.6 14.8c6.8.9 12.4 5.6 13.6 12.3 1.3 7.2-1.6 13.9-7.8 17.4-6 3.4-13.6 3.9-19-.4-4.9-3.9-6.6-10.3-4.3-16.3 2.6-7 9.7-13.9 17.5-13z"/>
 </svg>

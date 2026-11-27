@@ -5,64 +5,27 @@
     "singularName": "location",
     "pluralName": "locations",
     "displayName": "Location",
-    "description": ""
+    "description": "Practice locations. Used by sessions and shown on the website."
   },
   "options": {
-    "draftAndPublish": true
-  },
-  "pluginOptions": {
-    "i18n": {
-      "localized": true
-    }
+    "draftAndPublish": false
   },
   "attributes": {
     "name": {
       "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
       "required": true
     },
     "address": {
       "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "required": true
-    },
-    "city": {
-      "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
       "required": true
     },
     "postalcode": {
       "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
       "required": true
     },
-    "description": {
-      "type": "richtext",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
-    "locationId": {
-      "type": "uid",
-      "targetField": "name"
+    "city": {
+      "type": "string",
+      "required": true
     },
     "mapUrl": {
       "type": "string"

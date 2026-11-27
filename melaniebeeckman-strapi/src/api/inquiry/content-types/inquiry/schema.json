@@ -1,0 +1,62 @@
+{
+  "kind": "collectionType",
+  "collectionName": "inquiries",
+  "info": {
+    "singularName": "inquiry",
+    "pluralName": "inquiries",
+    "displayName": "Inquiry",
+    "description": "Messages sent through the website: organisation requests (group session or talk) and general contact messages."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "kind": {
+      "type": "enumeration",
+      "enum": ["group_session", "talk", "contact"],
+      "required": true
+    },
+    "topic": {
+      "type": "string",
+      "maxLength": 120
+    },
+    "organisation": {
+      "type": "string",
+      "maxLength": 160
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 120
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "phone": {
+      "type": "string",
+      "maxLength": 40
+    },
+    "preferredDate": {
+      "type": "string",
+      "maxLength": 120
+    },
+    "participants": {
+      "type": "integer",
+      "min": 1
+    },
+    "message": {
+      "type": "text",
+      "maxLength": 3000
+    },
+    "language": {
+      "type": "enumeration",
+      "enum": ["nl", "en"],
+      "default": "nl"
+    },
+    "handled": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

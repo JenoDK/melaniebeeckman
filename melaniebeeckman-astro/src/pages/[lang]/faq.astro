@@ -1,15 +1,30 @@
 ---
 import Layout from '@layouts/Layout.astro';
-import { getAsLanguage, getLanguagePaths } from '@i18n/utils';
-import FaqComponent from '@components/FaqComponent.astro';
+import FaqList from '@components/FaqList.astro';
+import { t, href, langPaths, type Lang } from '@i18n/index';
 
-const lang = getAsLanguage(Astro.params.lang, Astro.currentLocale);
-
-export function getStaticPaths() {
-    return getLanguagePaths();
-}
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+const c = t(lang);
 ---
 
-<Layout lang={lang}>
-    <FaqComponent lang={lang} />
+<Layout lang={lang} page="faq">
+  <section class="narrow stack" style="padding-top: 64px; padding-bottom: 140px; gap: 56px;">
+    <div class="stack" style="gap: 20px;">
+      <p class="eyebrow e-rise">{c.faq.eyebrow}</p>
+      <h1 class="h1 e-rise e-d1">{c.faq.title}</h1>
+    </div>
+    {
+      c.faq.groups.map((grp) => (
+        <div class="stack reveal" style="gap: 4px;">
+          <h2 style="margin: 0 0 8px; font-family: var(--serif); font-weight: 400; font-size: 30px; color: var(--wine);">{grp.title}</h2>
+          <FaqList items={grp.items} />
+        </div>
+      ))
+    }
+    <div class="card card-sand row reveal" style="justify-content: space-between; gap: 24px;">
+      <p style="margin: 0; font-family: var(--serif); font-size: 28px; line-height: 1.25; color: var(--ink); max-width: 18em;">{c.faq.intro}</p>
+      <a class="btn" href={href(lang, 'contact', '#bericht')}>{c.faq.contactCta}</a>
+    </div>
+  </section>
 </Layout>

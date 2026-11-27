@@ -1,0 +1,36 @@
+---
+/** The organic, breathing shape with "adem in / adem uit". Never a perfect circle. */
+interface Props {
+  size?: string;
+  breatheIn?: string;
+  breatheOut?: string;
+  halo?: boolean;
+}
+const { size = 'min(440px, 82vw)', breatheIn, breatheOut, halo = true } = Astro.props;
+---
+
+<div class="blob" style={`width: ${size}; aspect-ratio: 1; display: flex; align-items: center; justify-content: center;`}>
+  {
+    halo && (
+      <div class="e-halo" aria-hidden="true" style="inset: 0;">
+        <div class="e-turn fill">
+          <div class="e-morph fill" style="border: 1px solid var(--tan-2); animation-delay: -5s;" />
+        </div>
+      </div>
+    )
+  }
+  <div class="e-breath" aria-hidden="true" style={`inset: ${halo ? '6%' : '0'};`}>
+    <div class="e-turnback fill"><div class="e-morph fill" style="background: var(--blob-1);"></div></div>
+  </div>
+  <div class="e-breath" aria-hidden="true" style={`inset: ${halo ? '24%' : '22%'}; animation-delay: -.6s;`}>
+    <div class="e-turn fill"><div class="e-morph fill" style="background: var(--blob-2); animation-delay: -11s;"></div></div>
+  </div>
+  {
+    breatheIn && (
+      <div class="breathe-words" aria-hidden="true">
+        <span class="e-in">{breatheIn}</span>
+        <span class="e-out">{breatheOut}</span>
+      </div>
+    )
+  }
+</div>

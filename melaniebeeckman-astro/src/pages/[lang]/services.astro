@@ -1,0 +1,108 @@
+---
+import Layout from '@layouts/Layout.astro';
+import BreathingBlob from '@components/BreathingBlob.astro';
+import { t, href, langPaths, type Lang } from '@i18n/index';
+import { site } from '@lib/site';
+
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+const c = t(lang);
+const s = c.services;
+const orgs = href(lang, 'orgs');
+---
+
+<Layout lang={lang} page="services">
+  <section class="wrap stack" style="padding-top: 64px; padding-bottom: 80px; gap: 22px; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <p class="eyebrow e-rise">{s.eyebrow}</p>
+    <h1 class="h1 e-rise e-d1">{s.title}</h1>
+    <p class="lead e-rise e-d2">{s.intro}</p>
+  </section>
+
+  <section class="wrap reveal" style="padding-bottom: 100px;">
+    <article class="card stack" style="gap: 40px;">
+      <div class="row" style="gap: 24px;">
+        <div class="icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6B1E2E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg>
+        </div>
+        <h2 class="h2" style="font-size: clamp(34px, 3.6vw, 46px); color: var(--wine);">{c.home.therapyTitle}</h2>
+      </div>
+      <div class="grid" style="--min: 300px; --gap: 48px;">
+        <div class="stack" style="gap: 12px;">
+          <p class="eyebrow">{s.therapyFor}</p>
+          <p class="body body-lg">{s.therapyForText}</p>
+          <p class="eyebrow" style="margin-top: 16px;">{s.therapyWhat}</p>
+          <div class="chips">{c.complaints.map((x) => <span class="chip">{x}</span>)}</div>
+        </div>
+        <div class="stack" style="gap: 12px;">
+          <p class="eyebrow">{s.therapyHow}</p>
+          <p class="body body-lg">{s.therapyHowText}</p>
+        </div>
+      </div>
+
+      <div class="practical-panel">
+        <div class="stack" style="gap: 14px;">
+          <p class="eyebrow">{s.practical}</p>
+          <ul class="dots body">{s.practicalItems.map((p) => <li>{p}</li>)}</ul>
+          <a class="btn" href={site.rosa} target="_blank" rel="noopener" style="align-self: flex-start; margin-top: 10px;">{s.bookRosa}</a>
+        </div>
+        <div class="stack" style="gap: 14px;">
+          <p class="eyebrow">{s.rates.title}</p>
+          <dl class="rate-tiles">
+            {
+              s.rates.rows.map(([label, price]) => (
+                <div class="rate-tile">
+                  <dt>{label}</dt>
+                  <dd>{price}</dd>
+                </div>
+              ))
+            }
+          </dl>
+          <p class="small">
+            {s.rates.note}<a href={site.elpRates} target="_blank" rel="noopener" style="white-space: nowrap;">{s.rates.linkLabel}</a>.
+          </p>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="band">
+    <div class="wrap row reveal" style="padding-top: 120px; padding-bottom: 120px; gap: clamp(48px, 8vw, 110px);">
+      <BreathingBlob size="min(360px, 78vw)" breatheIn={c.home.breatheIn} breatheOut={c.home.breatheOut} />
+      <div class="stack" style="flex: 1 1 380px; gap: 22px;">
+        <h2 class="h2" style="font-size: clamp(34px, 3.6vw, 46px); color: var(--wine);">{s.mindTitle}</h2>
+        <p class="body body-lg" style="max-width: 32em;">{s.mindText}</p>
+        <ul class="dots body">{s.mindItems.map((m) => <li>{m}</li>)}</ul>
+        <a class="btn" href={href(lang, 'sessions')} style="align-self: flex-start; margin-top: 8px;">{s.mindCta}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap stack reveal" style="padding-top: 130px; padding-bottom: 140px; gap: 44px;">
+    <div class="stack center" style="gap: 14px;">
+      <p class="eyebrow">{s.groupsEyebrow}</p>
+      <h2 class="h2">{s.groupsTitle}</h2>
+    </div>
+    <div class="grid" style="--min: 300px; --gap: 28px;">
+      <article class="card card-lift stack" style="gap: 18px;">
+        <div class="icon">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#6B1E2E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2"></circle><path d="M4 20c2-3 5-4 8-4s6 1 8 4"></path><path d="M6 12c2 1 4 1.5 6 1.5s4-.5 6-1.5"></path><path d="M12 7v6.5"></path></svg>
+        </div>
+        <h3 class="h3">{s.groupA}</h3>
+        <p class="body">{s.groupAText}</p>
+        <p class="eyebrow" style="margin-top: 6px;">{s.topicsLabel}</p>
+        <div class="chips">{c.groupTopics.map((g) => <span class="chip">{g}</span>)}</div>
+        <a class="btn" href={orgs + '?type=group#aanvraag'} style="align-self: flex-start; margin-top: auto;">{c.shared.bookGroup}</a>
+      </article>
+      <article class="card card-sand card-lift stack" style="gap: 18px;">
+        <div class="icon">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#6B1E2E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><path d="M12 18v3"></path></svg>
+        </div>
+        <h3 class="h3">{s.groupB}</h3>
+        <p class="body">{s.groupBText}</p>
+        <p class="eyebrow" style="margin-top: 6px;">{s.topicsLabel}</p>
+        <div class="chips">{c.talkTopics.map((k) => <span class="chip">{k}</span>)}</div>
+        <a class="btn" href={orgs + '?type=talk#aanvraag'} style="align-self: flex-start; margin-top: auto;">{c.shared.bookTalk}</a>
+      </article>
+    </div>
+  </section>
+</Layout>

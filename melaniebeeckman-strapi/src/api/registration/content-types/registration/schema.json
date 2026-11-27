@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "registrations",
+  "info": {
+    "singularName": "registration",
+    "pluralName": "registrations",
+    "displayName": "Registration",
+    "description": "A booking for a session. Created by the website. Set booking status to cancelled to free up the places."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "session": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::session.session",
+      "inversedBy": "registrations"
+    },
+    "sessionDocumentId": {
+      "type": "string",
+      "required": true,
+      "private": true
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 120
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "phone": {
+      "type": "string",
+      "maxLength": 40
+    },
+    "places": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "default": 1
+    },
+    "note": {
+      "type": "text",
+      "maxLength": 1000
+    },
+    "bookingStatus": {
+      "type": "enumeration",
+      "enum": ["confirmed", "cancelled"],
+      "default": "confirmed",
+      "required": true
+    },
+    "language": {
+      "type": "enumeration",
+      "enum": ["nl", "en"],
+      "default": "nl"
+    }
+  }
+}

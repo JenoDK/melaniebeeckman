@@ -1,105 +1,84 @@
 ---
 import Layout from '@layouts/Layout.astro';
-import { getContactPage } from '@lib/contactpage';
-import Markdown from '@components/Markdown.astro';
-import { Icon } from 'astro-icon/components';
-import { getAsLanguage, getLanguagePaths, translate } from '@i18n/utils';
+import InquiryForm from '@components/InquiryForm.astro';
+import { t, href, langPaths, type Lang } from '@i18n/index';
+import { site, locations } from '@lib/site';
 
-const lang = getAsLanguage(Astro.params.lang, Astro.currentLocale);
-
-// Fetch contact page data
-const contactPage = await getContactPage(lang);
-
-// Create email mailto link with subject and body
-const emailSubject = translate(lang, 'contact.emailTemplate.subject') ?? '';
-const emailBody = translate(lang, 'contact.emailTemplate.body') ?? '';
-const mailtoLink = `mailto:${contactPage.email}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-
-export function getStaticPaths() {
-    return getLanguagePaths();
-}
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+const c = t(lang);
+const k = c.contact;
+const serif = 'font-family: var(--serif); font-size: 28px; color: var(--wine);';
 ---
 
-<Layout title={contactPage.title} lang={lang}>
-    <main class="container mx-auto max-w-4xl">
-        <h1 class="text-4xl font-bold mb-8">{contactPage.title}</h1>
+<Layout lang={lang} page="contact">
+  <section class="wrap stack" style="padding-top: 64px; padding-bottom: 72px; gap: 22px; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <p class="eyebrow e-rise">{k.eyebrow}</p>
+    <h1 class="h1 e-rise e-d1">{k.title}</h1>
+    <p class="lead e-rise e-d2">{k.intro}</p>
+  </section>
 
-        <!-- Contact Introduction -->
-        <div class="prose prose-lg">
-            <Markdown content={contactPage.contact_intro} />
-        </div>
+  <section class="wrap grid e-rise e-d3" style="--min: 240px; --gap: 20px; padding-bottom: 56px;">
+    <a class="card card-lift stack" href={site.rosa} target="_blank" rel="noopener" style="gap: 10px; padding: 36px;">
+      <span class="eyebrow">{k.online}</span>
+      <span style={serif}>rosa.be →</span>
+    </a>
+    <a class="card card-sand card-lift stack" href={`tel:${site.phone}`} style="gap: 10px; padding: 36px;">
+      <span class="eyebrow">{k.phone}</span>
+      <span style={serif}>{site.phoneLabel}</span>
+    </a>
+    <a class="card card-sand card-lift stack" href={`mailto:${site.email}`} style="gap: 10px; padding: 36px;">
+      <span class="eyebrow">{k.email}</span>
+      <span style={serif + ' font-size: 24px; overflow-wrap: anywhere;'}>{site.email}</span>
+    </a>
+  </section>
 
-        <div class="divider"></div>
+  <section class="wrap grid reveal" style="--min: 300px; --gap: 20px; padding-bottom: 56px;">
+    <a class="card-line card-lift row" href={href(lang, 'sessions')} style="justify-content: space-between; flex-wrap: nowrap; gap: 16px; padding: 28px 32px;">
+      <span class="stack" style="gap: 4px;"><span class="eyebrow">{c.nav.sessions}</span><span class="body">{k.sessionsLine}</span></span>
+      <span aria-hidden="true" style="font-size: 22px; color: var(--wine);">→</span>
+    </a>
+    <a class="card-line card-lift row" href={href(lang, 'orgs', '#aanvraag')} style="justify-content: space-between; flex-wrap: nowrap; gap: 16px; padding: 28px 32px;">
+      <span class="stack" style="gap: 4px;"><span class="eyebrow">{c.nav.orgs}</span><span class="body">{k.orgsLine}</span></span>
+      <span aria-hidden="true" style="font-size: 22px; color: var(--wine);">→</span>
+    </a>
+  </section>
 
-        <div class="flex flex-col gap-4">
-            <h2 class="text-2xl font-semibold">{translate(lang, 'contact.contactInfo')}</h2>
+  <section class="wrap reveal" style="padding-bottom: 100px;">
+    <div class="note" role="note">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#6B1E2E" stroke-width="1.4" stroke-linecap="round" aria-hidden="true" style="flex: 0 0 auto; margin-top: 2px;"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5.5"></path><path d="M12 16.5v.01"></path></svg>
+      <div class="stack" style="gap: 6px;">
+        <strong style="font-weight: 500; color: var(--wine); font-size: 16px;">{k.crisisTitle}</strong>
+        <span class="body">{k.crisisText}</span>
+      </div>
+    </div>
+  </section>
 
-            <div class="grid md:grid-cols-2 gap-8 mb-8">
-                <!-- Phone -->
-                <div class="flex items-center gap-4">
-                    <div class="bg-primary/10 p-3 rounded-full">
-                        <Icon name="mdi:phone" class="w-6 h-6 text-primary" />
-                    </div>
-                    <div>
-                        <p class="font-medium">{translate(lang, 'contact.phone')}</p>
-                        <a href={`tel:${contactPage.phone}`} class="text-primary hover:underline">
-                            {contactPage.phone}
-                        </a>
-                    </div>
-                </div>
+  <section id="bericht" class="narrow stack reveal" style="padding-bottom: 120px; gap: 20px; scroll-margin-top: 24px;">
+    <h2 class="h2">{c.contactForm.title}</h2>
+    <p class="body body-lg" style="margin-bottom: 12px;">{c.contactForm.intro}</p>
+    <InquiryForm lang={lang} variant="contact" />
+  </section>
 
-                <!-- Email with mailto link -->
-                <div class="flex items-center gap-4">
-                    <div class="bg-primary/10 p-3 rounded-full">
-                        <Icon name="mdi:email" class="w-6 h-6 text-primary" />
-                    </div>
-                    <div>
-                        <p class="font-medium">{translate(lang, 'contact.email')}</p>
-                        <a href={mailtoLink} class="text-primary hover:underline">
-                            {contactPage.email}
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <a href={mailtoLink} class="btn btn-primary">
-                    <Icon name="mdi:email-outline" class="w-5 h-5 mr-2" />
-                    {translate(lang, 'contact.sendEmailBtn')}
-                </a>
-            </div>
-
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- Locations -->
-        {contactPage.locations && contactPage.locations.length > 0 && (
-                <div>
-                    <h2 class="text-2xl font-semibold mb-6 pb-2">{translate(lang, 'contact.locations')}</h2>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        {contactPage.locations.map(location => (
-                                <div class="border-l-4 border-primary pl-4">
-                                    <h3 class="font-bold text-lg">{location.name}</h3>
-                                    <p class="text-base-content/80">{location.address}</p>
-                                    <p class="text-base-content/80 mb-4">{location.postalCode} {location.city}</p>
-
-                                    {location.mapUrl && (
-                                            <a
-                                                    href={location.mapUrl}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    class="btn btn-outline btn-sm"
-                                            >
-                                                <Icon name="mdi:map-marker" class="w-4 h-4 mr-1" />
-                                                {translate(lang, 'contact.directions')}
-                                            </a>
-                                    )}
-                                </div>
-                        ))}
-                    </div>
-                </div>
-        )}
-
-    </main>
+  <section class="band">
+    <div class="wrap stack reveal" style="padding-top: 110px; padding-bottom: 120px; gap: 40px;">
+      <h2 class="h2">{k.locations}</h2>
+      <div class="grid" style="--min: 280px; --gap: 24px;">
+        {
+          locations.map((loc) => (
+            <article class="card card-page stack" style="border-radius: 32px; padding: 40px; gap: 12px;">
+              <p class="eyebrow">{loc.city[lang]}</p>
+              <h3 class="h3" style="font-size: 30px;">{loc.name}</h3>
+              <p class="body">
+                {loc.street}
+                <br />
+                {loc.postal} {loc.city[lang]}
+              </p>
+              <a class="tlink" href={loc.maps} target="_blank" rel="noopener" style="align-self: flex-start; margin-top: 8px; font-size: 15px;">{k.route}</a>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 </Layout>

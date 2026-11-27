@@ -8,18 +8,26 @@
     "dist"
   ],
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
     "baseUrl": ".",
     "paths": {
-      "@assets/*": ["src/assets/*"],
-      "@i18n/*": ["src/i18n/*"],
-      "@pages/*": ["src/pages/*"],
-      "@components/*": ["src/components/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@styles/*": ["src/styles/*"],
-      "@lib/*": ["src/lib/*"],
-      "@interfaces/*": ["src/interfaces/*"]
+      "@assets/*": [
+        "src/assets/*"
+      ],
+      "@i18n/*": [
+        "src/i18n/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@layouts/*": [
+        "src/layouts/*"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ],
+      "@lib/*": [
+        "src/lib/*"
+      ]
     }
   }
 }
