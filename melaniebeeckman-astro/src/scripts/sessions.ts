@@ -13,7 +13,7 @@ export type Session = {
 };
 export type SessionList = { registrationsOpen: boolean; maxPlacesPerBooking: number; sessions: Session[] };
 
-const LOCALES: Record<string, string> = { nl: 'nl-BE', en: 'en-GB', fr: 'fr-BE' };
+const LOCALES: Record<string, string> = { nl: 'nl-BE', en: 'en-GB' };
 const TZ = 'Europe/Brussels';
 
 /** Shared between components on the same page; a fresh request after 2 seconds. */

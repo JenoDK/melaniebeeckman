@@ -433,7 +433,7 @@ export interface ApiInquiryInquiry extends Struct.CollectionTypeSchema {
     handled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     kind: Schema.Attribute.Enumeration<['group_session', 'talk', 'contact']> &
       Schema.Attribute.Required;
-    language: Schema.Attribute.Enumeration<['nl', 'en', 'fr']> &
+    language: Schema.Attribute.Enumeration<['nl', 'en']> &
       Schema.Attribute.DefaultTo<'nl'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -533,7 +533,7 @@ export interface ApiRegistrationRegistration
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     email: Schema.Attribute.Email & Schema.Attribute.Required;
-    language: Schema.Attribute.Enumeration<['nl', 'en', 'fr']> &
+    language: Schema.Attribute.Enumeration<['nl', 'en']> &
       Schema.Attribute.DefaultTo<'nl'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -648,7 +648,7 @@ export interface ApiWaitlistEntryWaitlistEntry
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     email: Schema.Attribute.Email & Schema.Attribute.Required;
-    language: Schema.Attribute.Enumeration<['nl', 'en', 'fr']> &
+    language: Schema.Attribute.Enumeration<['nl', 'en']> &
       Schema.Attribute.DefaultTo<'nl'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<

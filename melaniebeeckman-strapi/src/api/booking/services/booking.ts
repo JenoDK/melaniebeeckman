@@ -13,7 +13,7 @@ const WAITLIST = 'api::waitlist-entry.waitlist-entry';
 const INQUIRY = 'api::inquiry.inquiry';
 const SETTINGS = 'api::booking-setting.booking-setting';
 
-const LANGUAGES = ['nl', 'en', 'fr'] as const;
+const LANGUAGES = ['nl', 'en'] as const;
 const INQUIRY_KINDS = ['group_session', 'talk', 'contact'] as const;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

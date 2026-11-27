@@ -65,7 +65,8 @@ const a = c.about;
     </div>
     <div class="stack" style="gap: 28px;">
       <h2 class="h2" style="font-size: 40px;">{a.pubTitle}</h2>
-      <p class="body empty" style="text-align: left; border-radius: 20px; padding: 24px;">{a.pubText}</p>
+      <p class="body body-lg">{a.pubText}</p>
+      <a class="tlink" href={site.researchgate} target="_blank" rel="noopener" style="align-self: flex-start;">{a.pubLink} →</a>
       <div class="row" style="gap: 12px; margin-top: 12px;">
         <a class="btn" href={site.rosa} target="_blank" rel="noopener">{a.cta}</a>
         <a class="btn btn-line" href={href(lang, 'services')}>{c.nav.services}</a>

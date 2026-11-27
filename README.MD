@@ -4,7 +4,7 @@ Website of Melanie Beeckman, clinical psychologist in Ghent and Lokeren.
 
 | Part | What it does |
 |---|---|
-| `melaniebeeckman-astro` | Static site in NL, EN and FR. All page copy lives here, in `src/i18n/base.ts` and `src/i18n/extra.ts`. |
+| `melaniebeeckman-astro` | Static site in NL and EN. All page copy lives here, in `src/i18n/base.ts` and `src/i18n/extra.ts`. |
 | `melaniebeeckman-strapi` | Strapi 5. Only what changes without a developer: sessions, bookings, requests and the waitlist. Sends the emails. |
 
 ## How it fits together

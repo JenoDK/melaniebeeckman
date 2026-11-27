@@ -17,7 +17,7 @@
     },
     "language": {
       "type": "enumeration",
-      "enum": ["nl", "en", "fr"],
+      "enum": ["nl", "en"],
       "default": "nl"
     },
     "notified": {

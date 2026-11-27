@@ -84,48 +84,6 @@ const extra = {
     },
     notFound: { title: 'This page doesn’t exist.', text: 'It may have moved. From the home page you’ll find your way.', cta: 'Go to the home page' },
   },
-
-  fr: {
-    meta: {
-      siteName: 'Melanie Beeckman',
-      home: { title: 'Melanie Beeckman, psychologue clinicienne à Gand et Lokeren', description: 'Psychologue clinicienne (PhD) à Gand et Lokeren. Thérapie individuelle, pleine conscience et yoga en groupe, et conférences pour organisations.' },
-      about: { title: 'À propos', description: 'Qui je suis, ma façon de travailler et mes spécialisations : personnes âgées, pleine conscience, ACT et douleur chronique.' },
-      services: { title: 'Offre', description: 'Thérapie individuelle, séances de groupe de pleine conscience et de yoga, et formations ou conférences pour organisations.' },
-      sessions: { title: 'Pleine conscience & yoga en groupe', description: 'Consultez les séances prévues et réservez directement votre place.' },
-      orgs: { title: 'Pour organisations', description: 'Une formation à la pleine conscience, du yoga en pleine conscience ou une conférence pour votre équipe, école ou association.' },
-      faq: { title: 'Questions fréquentes', description: 'Réponses aux questions sur la thérapie, l’ELP, les rendez-vous et les séances de groupe.' },
-      contact: { title: 'Contact', description: 'Prenez rendez-vous via Rosa, appelez, écrivez ou envoyez un message. Cabinet à Gand et Lokeren.' },
-      notFound: { title: 'Page introuvable', description: 'Cette page n’existe pas.' },
-    },
-    ui: { skip: 'Aller au contenu', openMenu: 'Menu', closeMenu: 'Fermer le menu', newTab: '(s’ouvre dans une nouvelle fenêtre)' },
-    booking: {
-      loading: 'Chargement des séances…',
-      price: 'par personne',
-      free: 'Gratuit',
-      sending: 'Un instant…',
-      errors: {
-        generic: 'Une erreur s’est produite. Réessayez, ou envoyez-moi un e-mail.',
-        load: 'Les séances n’ont pas pu être chargées. Réessayez plus tard, ou envoyez-moi un e-mail.',
-        full: 'Cette séance vient d’être complète. Choisissez une autre date.',
-        notEnough: 'Il ne reste que {n} places.',
-        closed: 'Les inscriptions pour cette séance sont fermées.',
-        email: 'Cette adresse e-mail ne semble pas correcte.',
-        name: 'Indiquez votre nom, sans liens.',
-        missing: 'Remplissez les champs obligatoires.',
-        tooMany: 'Trop de tentatives à la suite. Réessayez dans quelques minutes.',
-        captcha: 'Confirmez que vous n’êtes pas un robot.',
-      },
-    },
-    contactForm: {
-      title: 'Envoyer un message',
-      intro: 'Pour une question, ou si vous souhaitez d’abord en savoir un peu plus. Je réponds en général en quelques jours ouvrables.',
-      privacy: 'Évitez de partager ici des informations sensibles ou médicales. Nous en parlerons plutôt lors d’un entretien.',
-      name: 'Nom', email: 'E-mail', phone: 'Téléphone (facultatif)', msg: 'Message',
-      submit: 'Envoyer le message', sentTitle: 'Merci !',
-      sentText: 'Votre message a bien été envoyé. Je vous réponds dès que possible.', again: 'Nouveau message',
-    },
-    notFound: { title: 'Cette page n’existe pas.', text: 'Elle a peut-être été déplacée. Depuis l’accueil, vous trouverez votre chemin.', cta: 'Retour à l’accueil' },
-  },
 };
 
 export default extra;

@@ -1,5 +1,5 @@
 ---
-/* The root sends visitors to their language: French or English browsers get /fr/ or /en/, everyone else /nl/. */
+/* The root sends visitors to their language: English browsers get /en/, everyone else /nl/. */
 ---
 
 <!doctype html>
@@ -14,7 +14,7 @@
       (function () {
         var l = (navigator.languages && navigator.languages[0]) || navigator.language || 'nl';
         l = l.slice(0, 2).toLowerCase();
-        location.replace('/' + (l === 'fr' || l === 'en' ? l : 'nl') + '/');
+        location.replace('/' + (l === 'en' ? 'en' : 'nl') + '/');
       })();
     </script>
   </head>

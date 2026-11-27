@@ -37,6 +37,7 @@ const langHref = (l: Lang) => (page === 'notFound' ? `/${l}/` : href(l, page));
         </div>
         <a class="btn btn-sm" href={site.rosa} target="_blank" rel="noopener">{c.home.cta1}</a>
       </div>
+      <a class="btn btn-line btn-sm book-btn" href={site.rosa} target="_blank" rel="noopener">{c.nav.book}<span class="sr-only"> {c.ui.newTab}</span></a>
       <div class="langs langs-bar" role="group" aria-label={c.ui.language}>
         {
           langs.map((l) => (
@@ -46,7 +47,6 @@ const langHref = (l: Lang) => (page === 'notFound' ? `/${l}/` : href(l, page));
           ))
         }
       </div>
-      <a class="btn btn-line btn-sm" href={site.rosa} target="_blank" rel="noopener">{c.nav.book}<span class="sr-only"> {c.ui.newTab}</span></a>
       <button type="button" class="btn btn-line btn-sm menu-btn" aria-expanded="false" aria-controls="menu-panel" data-open={c.ui.openMenu} data-close={c.ui.closeMenu}>
         {c.ui.openMenu}
       </button>
@@ -69,4 +69,9 @@ const langHref = (l: Lang) => (page === 'notFound' ? `/${l}/` : href(l, page));
     header.querySelectorAll('.main-nav a').forEach((a) => a.addEventListener('click', () => set(false)));
   }
   document.addEventListener('astro:page-load', initMenu);
+
+  // Soft shadow under the sticky bar once the page is scrolled (mobile).
+  const markScrolled = () => document.querySelector('.site-header')?.classList.toggle('is-scrolled', window.scrollY > 8);
+  window.addEventListener('scroll', markScrolled, { passive: true });
+  document.addEventListener('astro:page-load', markScrolled);
 </script>
