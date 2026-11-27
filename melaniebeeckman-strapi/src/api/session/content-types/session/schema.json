@@ -1,0 +1,55 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sessions",
+  "info": {
+    "singularName": "session",
+    "pluralName": "sessions",
+    "displayName": "Session",
+    "description": "A planned mindfulness or mindful yoga group session. Publish it to show it on the website."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "type": {
+      "type": "enumeration",
+      "enum": ["mindful_yoga", "mindfulness"],
+      "required": true,
+      "default": "mindful_yoga"
+    },
+    "startsAt": {
+      "type": "datetime",
+      "required": true
+    },
+    "endsAt": {
+      "type": "datetime",
+      "required": true
+    },
+    "location": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::location.location"
+    },
+    "capacity": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "default": 10
+    },
+    "priceInEuros": {
+      "type": "decimal",
+      "min": 0
+    },
+    "bookingOpen": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "registrations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::registration.registration",
+      "mappedBy": "session"
+    }
+  }
+}

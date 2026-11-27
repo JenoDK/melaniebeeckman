@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "waitlist_entries",
+  "info": {
+    "singularName": "waitlist-entry",
+    "pluralName": "waitlist-entries",
+    "displayName": "Waitlist entry",
+    "description": "People who want an email when new sessions are planned."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "language": {
+      "type": "enumeration",
+      "enum": ["nl", "en", "fr"],
+      "default": "nl"
+    },
+    "notified": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
